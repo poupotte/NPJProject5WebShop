@@ -6,6 +6,7 @@ package webShop.view;
 
 
 import java.io.Serializable;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -17,7 +18,7 @@ import webShop.controller.WebShopFacade;
  *
  * @author fingolfin
  */
-@Named(value = "homePageManager")
+@ManagedBean("homePageManager")
 @ConversationScoped
 public class HomePageManager implements Serializable {
     @EJB
@@ -48,21 +49,14 @@ public class HomePageManager implements Serializable {
      * @return 
      */
     public boolean getLogIn(){
-        return false;
+        return logedIn;
     }
     
     
-    public void setLogOut(String logout){
+    public void setLogOut(){
         startConversation();
         webShopFacade.logoutCustomer(this.userName);
         this.logedIn = false;
-    }
-    /**
-     * not used
-     * @return 
-     */
-    public boolean getLogOut(){
-        return false;
     }
 
     public String getUserName() {

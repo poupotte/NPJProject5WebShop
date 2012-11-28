@@ -7,6 +7,7 @@ package webShop.view;
 import javax.inject.Named;
 import javax.enterprise.context.ConversationScoped;
 import java.io.Serializable;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.faces.bean.ManagedProperty;
@@ -18,7 +19,7 @@ import webShop.model.CustomerDTO;
  *
  * @author zoe
  */
-@Named(value = "webShopManager")
+@ManagedBean("webShopManager")
 @ConversationScoped
 public class WebShopManager implements Serializable {
  
