@@ -20,6 +20,7 @@ import webShop.controller.WebShopFacade;
 @ManagedBean(name = "homePageManager")
 @ConversationScoped
 public class HomePageManager implements Serializable {
+    private static final long serialVersionUID = 16247164405L;
     @EJB
     private WebShopFacade webShopFacade;
     private Boolean logedIn;
@@ -52,7 +53,7 @@ public class HomePageManager implements Serializable {
     }
     
     
-    public void setLogOut(){
+    public void logOut(){
         startConversation();
         webShopFacade.logoutCustomer(this.userName);
         this.logedIn = false;

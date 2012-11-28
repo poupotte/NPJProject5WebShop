@@ -32,7 +32,8 @@ import webShop.model.CustomerDTO;
 @ManagedBean(name="webShopManager")
 @ConversationScoped
 public class WebShopManager implements Serializable {
- 
+    
+    private static final long serialVersionUID = 16247164406L;
     @EJB
     private WebShopFacade webShopFacade;
     private String currentPseudo;
