@@ -5,10 +5,12 @@
 package webShop.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -21,15 +23,20 @@ public abstract class Gnome implements Serializable, GnomeDTO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Integer id;
     protected Integer price;
+    @ManyToOne ()
+    private Inventory inventory;
     
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public Integer getPrice() {
         return price;
     }
 
+    @Override
     public void setPrice(Integer price) {
         this.price = price;
     }

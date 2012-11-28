@@ -23,7 +23,7 @@ public class Inventory implements Serializable, InventoryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @OneToMany(mappedBy = "gnome")
+    @OneToMany(mappedBy = "inventory")
     private List<Gnome> gnomes;
     
 

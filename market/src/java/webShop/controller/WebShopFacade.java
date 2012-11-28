@@ -30,7 +30,7 @@ import webShop.model.InventoryDTO;
 @Stateless
 public class WebShopFacade {
     
-    @PersistenceContext(unitName = "webShopPU")
+    @PersistenceContext(unitName = "marketPU")
     private EntityManager em;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
