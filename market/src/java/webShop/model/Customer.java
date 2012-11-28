@@ -5,10 +5,13 @@
 package webShop.model;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -22,7 +25,9 @@ public class Customer implements Serializable, CustomerDTO {
     private String pseudo;
     private String password;
     private Boolean isLog;
-
+    @OneToMany(mappedBy = "customer")
+    private List<Basket> baskets;
+    
     public Customer (String pseudo,String password) {
         this.pseudo = pseudo;
         this.password = password;
@@ -59,6 +64,15 @@ public class Customer implements Serializable, CustomerDTO {
 
     public void setId(String id) {
         this.pseudo = id;
+    }
+    
+    public void removeBasket(Basket basket){
+        baskets.remove(basket);
+    }
+    
+    public Iterator<Basket> getBasket(){
+        Iterator<Basket>it = baskets.iterator();
+        return it;
     }
 
     @Override
