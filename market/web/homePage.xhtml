@@ -7,9 +7,37 @@
     </h:head>
     <h:body>
         <h1> Welcome to our web shop </h1>
-            <p>
+             <p>
                 <h:outputLabel for="pseudo" value="#{homePageManager.userName}"/> 
              </p>
+             <p>
+                <h:outputText value="Inventory :"/> 
+             </p>
+        
+             <p>
+                <h:outputText value="Gnome with beer :"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quatity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityType1}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Gnome with axe"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quatity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityType1}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Bearded gnome"/> 
+             </p>
+             <p>
+                <h:output value ="Quatity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityType1}" />
+             </p>
+        
              <p>
                  <h:outputText value="#{homePageManager.error}" rendered="#{homePageManager.error != null}" style="color:red"/>
              </p>

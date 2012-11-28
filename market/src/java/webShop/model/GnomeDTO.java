@@ -10,9 +10,15 @@ package webShop.model;
  */
 public interface GnomeDTO {
       
-    public Integer getId();
+    public Type getType();
 
     public Integer getPrice();
+    
+    public Integer getAmount();
 
-    public void setPrice(Integer price) ;
+    public void setPrice(Integer price);
+    
+     public void setType(Type type);
+     
+    public void setAmount(Integer amount);
 }

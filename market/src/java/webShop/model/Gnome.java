@@ -5,7 +5,6 @@
 package webShop.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,19 +16,26 @@ import javax.persistence.ManyToOne;
  * @author zoe
  */
 @Entity
-public abstract class Gnome implements Serializable, GnomeDTO {
+public class Gnome implements Serializable, GnomeDTO {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Integer id;
-    protected Integer price;
+    private Type type;
+    private Integer price;
+    private Integer amount;
     @ManyToOne ()
     private Inventory inventory;
-    
-    @Override
-    public Integer getId() {
-        return id;
+
+    public Gnome() {
     }
+
+    public Gnome(Integer price, Type type, Integer amount, Inventory inventory) {
+        this.price = price;
+        this.type = type;
+        this.amount = amount;
+        this.inventory = inventory;
+    }
+    
 
     @Override
     public Integer getPrice() {
@@ -37,18 +43,34 @@ public abstract class Gnome implements Serializable, GnomeDTO {
     }
 
     @Override
+    public Type getType() {
+        return type;
+    }
+
+    @Override
+    public Integer getAmount() {
+        return amount;
+    }
+
+    @Override
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    @Override
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    @Override
     public void setPrice(Integer price) {
         this.price = price;
     }
     
-        public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (type != null ? type.hashCode() : 0);
         return hash;
     }
 
@@ -59,7 +81,7 @@ public abstract class Gnome implements Serializable, GnomeDTO {
             return false;
         }
         Gnome other = (Gnome) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.type == null && other.type != null) || (this.type != null && !this.type.equals(other.type))) {
             return false;
         }
         return true;
@@ -67,7 +89,7 @@ public abstract class Gnome implements Serializable, GnomeDTO {
 
     @Override
     public String toString() {
-        return "webShop.model.Gnome[ id=" + id + " ]";
+        return "webShop.model.Gnome[ id=" + type + " ]";
     }
     
 }
