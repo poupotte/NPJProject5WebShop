@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import webShop.controller.WebShopFacade;
@@ -18,7 +20,7 @@ import webShop.controller.WebShopFacade;
  * @author fingolfin
  */
 @ManagedBean(name = "homePageManager")
-@ConversationScoped
+@ApplicationScoped
 public class HomePageManager implements Serializable {
     private static final long serialVersionUID = 16247164405L;
     @EJB
