@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,13 +26,14 @@ public class Customer implements Serializable, CustomerDTO {
     private String pseudo;
     private String password;
     private Boolean isLog;
-    @OneToMany(mappedBy = "customer")
-    private List<Basket> baskets;
+    @OneToOne(mappedBy = "customer")
+    private Basket basket;
     
     public Customer (String pseudo,String password) {
         this.pseudo = pseudo;
         this.password = password;
         this.isLog = true;
+        this.basket = new Basket(0,0,0);
     }
     
     public Customer(){
@@ -66,13 +68,9 @@ public class Customer implements Serializable, CustomerDTO {
         this.pseudo = id;
     }
     
-    public void removeBasket(Basket basket){
-        baskets.remove(basket);
-    }
     
-    public Iterator<Basket> getBasket(){
-        Iterator<Basket>it = baskets.iterator();
-        return it;
+    public Basket getBasket(){
+        return basket;
     }
 
     @Override

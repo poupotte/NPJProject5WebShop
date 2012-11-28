@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -20,48 +21,70 @@ public class Basket implements Serializable, BasketDTO {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @ManyToOne
-    private Gnome gnome;
-    @ManyToOne
+    private Integer Id;
+    private Integer quantityBeer;
+    private Integer quantityBearded;
+    private Integer quantityAxe;
     private Customer customer;
+    
 
     public Basket() {
     }
 
-    public Basket(Gnome gnome, Customer customer) {
-        this.gnome = gnome;
-        this.customer = customer;
+    public Basket(Integer quantityBeer, Integer quantityBearded, Integer quantityAxe) {
+        this.quantityBeer = quantityBeer;
+        this.quantityBearded = quantityBearded;   
+        this.quantityAxe = quantityAxe;   
+    }
+
+    public Integer getQuantityBeer() {
+        return quantityBeer;
+    }
+
+    public Integer getQuantityBearded() {
+        return quantityBearded;
+    }
+
+    public Integer getQuantityAxe() {
+        return quantityAxe;
+    }
+
+    public void setQuantityBeer(Integer quantityBeer) {
+        this.quantityBeer = quantityBeer;
+    }
+
+    public void setQuantityBearded(Integer quantityBearded) {
+        this.quantityBearded = quantityBearded;
+    }
+
+    public void setQuantityAxe(Integer quantityAxe) {
+        this.quantityAxe = quantityAxe;
     }
     
-    public Integer getId() {
-        return id;
+    public void add (Integer amount, Type type) {
+        switch (type) {
+            case BEER : 
+                quantityBeer = quantityBeer + amount;
+                break;
+            case BEARDED :
+                quantityBearded = quantityBearded + amount;
+                break;
+            case AXE :
+                quantityAxe = quantityAxe + amount;
+                break;
+        }
     }
-
-    public Gnome getGnome() {
-        return gnome;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setGnome(Gnome gnome) {
-        this.gnome = gnome;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
+        
+    @Override
+        public void emptyBasket(){
+            quantityBeer = 0;
+            quantityBearded = 0;
+            quantityAxe = 0;
+        }
     
 
+    
+/*
     @Override
     public int hashCode() {
         int hash = 0;
@@ -86,5 +109,5 @@ public class Basket implements Serializable, BasketDTO {
     public String toString() {
         return "webShop.model.Basket[ id=" + id + " ]";
     }
-    
+    */
 }

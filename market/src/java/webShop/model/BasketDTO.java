@@ -10,12 +10,8 @@ package webShop.model;
  */
 public interface BasketDTO {
     
-    public Integer getId() ;
-
-    public Gnome getGnome() ;
-
-    public void setGnome(Gnome gnome);
-
-    public void setCustomer(Customer customer) ;
+    public void add (Integer amount, Type type);
+    
+    public void emptyBasket();
     
 }

@@ -20,8 +20,7 @@ public interface CustomerDTO {
       
       public void setIsLog(Boolean isLog);
        
-      public void removeBasket(Basket basket);
       
-      public Iterator<Basket> getBasket();
+      public Basket getBasket();
 
 }

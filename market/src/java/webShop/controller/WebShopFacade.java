@@ -92,26 +92,18 @@ public class WebShopFacade {
     
     /* Basket Management */
     
-    public void addGnomeToBasket(Integer idGnome, String nameCustomer){
+    public void addGnomeToBasket(Integer amount, Type type, String nameCustomer){
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
-        GnomeDTO gnome = em.find(Gnome.class, idGnome);
-        BasketDTO basket = new Basket((Gnome) gnome,(Customer) customer);
-        em.persist(basket);
+        BasketDTO basket = customer.getBasket();
+        basket.add(amount, type);
+        em.merge(basket);
     }
     
-    public void removeGnomeToBasket(Integer idGnome, String nameCustomer) {
+    public void removeGnomeToBasket(String nameCustomer) {
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
-        GnomeDTO gnome = em.find(Gnome.class, idGnome);
-        Iterator<Basket> it = customer.getBasket();
-        while (it.hasNext()){
-            Basket basket = it.next();
-            if (basket.getGnome() == gnome) {
-                customer.removeBasket(basket);
-                em.remove(basket);
-                break;
-            }
-        }
-        em.getTransaction().commit();
+        BasketDTO basket = customer.getBasket();
+        basket.emptyBasket();
+        em.merge(basket);
     }
     
 }

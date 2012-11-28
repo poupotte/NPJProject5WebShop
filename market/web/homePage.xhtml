@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Web shop</title>
     </h:head>
@@ -10,33 +11,68 @@
              <p>
                 <h:outputLabel for="pseudo" value="#{homePageManager.userName}"/> 
              </p>
+             <h2>Inventory :</h2>
              <p>
-                <h:outputText value="Inventory :"/> 
+                <h:outputText value="Gnome with a beer :"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityBeer}" />
              </p>
         
              <p>
-                <h:outputText value="Gnome with beer :"/> 
+                <h:outputText value="Gnome with an axe"/> 
              </p>
              <p>
-                <h:outputText value ="Quatity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityType1}" />
-             </p>
-        
-             <p>
-                <h:outputText value="Gnome with axe"/> 
-             </p>
-             <p>
-                <h:outputText value ="Quatity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityType1}" />
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityAxe}" />
              </p>
         
              <p>
                 <h:outputText value="Bearded gnome"/> 
              </p>
              <p>
-                <h:output value ="Quatity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityType1}" />
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityBearded}" />
              </p>
+        
+             <h2>Your basket :</h2> 
+        
+             <p>
+                <h:outputText value="Gnome with a beer :"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityBeerBasket}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Gnome with an axe"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityAxeBasket}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Bearded gnome"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{homePageManager.quantityBeardedBasket}" />
+             </p>
+        <h:form>
+            <h:selectOneMenu id="Gnomes" value="#{homePageManager.boughtGnomeType}">
+                        <f:selectItem itemLabel="Bearded gnome" itemValue="BEARDED"/>
+                        <f:selectItem  itemLabel="Gnome with an axe" itemValue="AXE"/>
+                        <f:selectItem  itemLabel="Gnome with a beer" itemValue="BEER"/>
+            </h:selectOneMenu>
+            <h:inputText value="#{homePageManager.boughtAmount}" />
+            <h:commandButton value="Put in the basket" action="#{homePageManager.putInBasket}"/>
+        </h:form>
+        <h:form>
+            <h:commandButton value="Buy" action="#{homePageManager.buy}"/>
+        </h:form>
         
              <p>
                  <h:outputText value="#{homePageManager.error}" rendered="#{homePageManager.error != null}" style="color:red"/>
