@@ -4,22 +4,32 @@
  */
 package webShop.view;
 
-import javax.inject.Named;
+import java.io.Serializable;
+import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.inject.Inject;
+import webShop.controller.*;
+import webShop.model.*;
+
+/*
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 import webShop.controller.WebShopFacade;
 import webShop.model.CustomerDTO;
-
+*/
 /**
  *
  * @author zoe
  */
-@ManagedBean("webShopManager")
+@ManagedBean(name="webShopManager")
 @ConversationScoped
 public class WebShopManager implements Serializable {
  
@@ -33,12 +43,22 @@ public class WebShopManager implements Serializable {
     @Inject
     private Conversation conversation;
     @ManagedProperty(value="#{homePageManager}")
-    private HomePageManager homePage;
+    private HomePageManager homePageManager;
     /**
      * Creates a new instance of webShopManager
      */
     public WebShopManager() {
     }
+
+    public HomePageManager getHomePageManager() {
+        return homePageManager;
+    }
+
+    public void setHomePageManager(HomePageManager homePageManager) {
+        this.homePageManager = homePageManager;
+    }
+    
+    
     
     private void handleException(Exception e) {
         stopConversation();
@@ -91,17 +111,6 @@ public class WebShopManager implements Serializable {
     public String getCurrentPassword() {
         return currentPassword;
     }
-
-    /*
-    public Boolean getHomePage() {
-        return homePage;
-    }
-*/
-    /*
-    public void setHomePage(Boolean homePage) {
-        this.homePage = homePage;
-    }
-*/
   
 
     public void setError(String error) {
@@ -128,8 +137,8 @@ public class WebShopManager implements Serializable {
             } else {
                 webShopFacade.loginCustomer(currentPseudo);
                 error = null;
-                homePage.setUserName(customer.getId());
-                homePage.setLogIn();
+                homePageManager.setUserName(customer.getId());
+                homePageManager.setLogIn();
             }
         } catch (Exception e) {
             handleException(e);
@@ -149,8 +158,8 @@ public class WebShopManager implements Serializable {
                 customer = webShopFacade.createCustomerDTO(
                                                     currentPseudo,
                                                     currentPassword);
-                homePage.setUserName(customer.getId());
-                homePage.setLogIn();
+                homePageManager.setUserName(customer.getId());
+                homePageManager.setLogIn();
             }
         } catch (Exception e) {
             handleException(e);

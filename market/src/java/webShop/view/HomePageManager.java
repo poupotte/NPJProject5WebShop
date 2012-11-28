@@ -6,19 +6,18 @@ package webShop.view;
 
 
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
 import webShop.controller.WebShopFacade;
 
 /**
  *
  * @author fingolfin
  */
-@ManagedBean("homePageManager")
+@ManagedBean(name = "homePageManager")
 @ConversationScoped
 public class HomePageManager implements Serializable {
     @EJB
