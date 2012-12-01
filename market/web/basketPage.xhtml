@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Web shop</title>
+    </h:head>
+    <h:body>
+        <h1> Welcome to our web shop </h1>
+             <p>
+                <h:outputLabel for="pseudo" value="#{basketPageManager.userName}"/> 
+             </p>
+             <h2>My basket :</h2>
+             <p>
+                <h:outputText value="Gnome with a beer :"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{basketPageManager.quantityBeer}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Gnome with an axe"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{basketPageManager.quantityAxe}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Bearded gnome"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{basketPageManager.quantityBearded}" />
+             </p>
+        
+             <p>
+                 <h:outputText value="#{basketPageManager.error}" rendered="#{basketPageManager.error != null}" style="color:red"/>
+             </p>
+        <h:form>
+            <h:commandButton value="Home" action="#{basketPageManager.redirect}"/>
+        </h:form>
+    </h:body>
+</html>
+

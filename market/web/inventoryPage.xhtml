@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Web shop</title>
+    </h:head>
+    <h:body>
+        <h1> Welcome to our web shop </h1>
+             <p>
+                <h:outputLabel for="pseudo" value="#{inventoryPageManager.userName}"/> 
+             </p>
+             <h2>Inventory :</h2>
+             <p>
+                <h:outputText value="Gnome with a beer :"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{inventoryPageManager.quantityBeer}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Gnome with an axe"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{inventoryPageManager.quantityAxe}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Bearded gnome"/> 
+             </p>
+             <p>
+                <h:outputText value ="Quantity :"/> 
+                <h:outputLabel value="#{inventoryPageManager.quantityBearded}" />
+             </p>
+        
+             <p>
+                 <h:outputText value="#{inventoryPageManager.error}" rendered="#{inventoryPageManager.error != null}" style="color:red"/>
+             </p>
+        <h:form>
+            <h:commandButton value="Home" action="#{inventoryPageManager.redirect}"/>
+        </h:form>
+    </h:body>
+</html>
+

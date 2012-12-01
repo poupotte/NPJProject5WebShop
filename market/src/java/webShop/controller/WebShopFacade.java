@@ -45,13 +45,13 @@ public class WebShopFacade {
     public void loginCustomer(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         customer.setIsLog(true);
-        em.getTransaction().commit();  
+        em.merge(customer);  
     }
         
     public void logoutCustomer(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         customer.setIsLog(false);
-        em.getTransaction().commit();    
+        em.merge(customer);    
     }
     
     public CustomerDTO getCustomer(String pseudo){
