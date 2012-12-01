@@ -4,8 +4,6 @@
  */
 package webShop.model;
 
-import java.util.Iterator;
-
 /**
  *
  * @author zoe
@@ -18,8 +16,15 @@ public interface CustomerDTO {
 
       public Boolean getIsLog();
       
+      public void setDebt(Integer debt);
+
+      public Integer getDebt();
+      
       public void setIsLog(Boolean isLog);
-       
+      
+      public void setMoney(Integer money);
+      
+      public Integer getMoney() ;
       
       public Basket getBasket();
 

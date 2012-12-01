@@ -14,9 +14,23 @@ public interface InventoryDTO {
     
     public Integer getId();
     
-    public Iterator<Gnome> getGnomes();
+    public Gnome getBeerGnome();
+
+    public Gnome getBeardedGnome();
+    
+    public Gnome getAxeGnome();
+    
+    /*public Iterator<Gnome> getGnomes();
     
     public void addGnome(Gnome gnome);
     
-    public void removeGnome(Gnome gnome);
+    public void removeGnome(Gnome gnome);*/
+    
+    public void add (Integer amount, Type type);
+    
+    public void remove (Integer amount, Type type);
+    
+    public void addNewGnome(Gnome gnome);
+    
+    public Integer getQuantity(Type type);
 }

@@ -27,5 +27,34 @@
             <to-view-id>/home.xhtml</to-view-id>  
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/homePage.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{inventoryPageManager.logIn}</if>
+            <to-view-id>/inventoryPage.xhtml</to-view-id>  
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/homePage.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{basketPageManager.logIn}</if>
+            <to-view-id>/basketPage.xhtml</to-view-id>  
+        </navigation-case>
+    </navigation-rule>    
+    <navigation-rule>
+        <from-view-id>/inventoryPage.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{homePageManager.logIn}</if>
+            <to-view-id>/homePage.xhtml</to-view-id>  
+        </navigation-case>
+    </navigation-rule>    
+    <navigation-rule>
+        <from-view-id>/basketPage.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{homePageManager.logIn}</if>
+            <to-view-id>/homePage.xhtml</to-view-id>  
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>
 

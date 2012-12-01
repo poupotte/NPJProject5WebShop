@@ -5,6 +5,7 @@
 package webShop.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,20 +22,22 @@ public class Basket implements Serializable, BasketDTO {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    private Integer id;
     private Integer quantityBeer;
     private Integer quantityBearded;
     private Integer quantityAxe;
+    @OneToOne (cascade = CascadeType.PERSIST)
     private Customer customer;
     
 
     public Basket() {
     }
 
-    public Basket(Integer quantityBeer, Integer quantityBearded, Integer quantityAxe) {
+    public Basket(Integer quantityBeer, Integer quantityBearded, Integer quantityAxe, Customer customer) {
         this.quantityBeer = quantityBeer;
         this.quantityBearded = quantityBearded;   
         this.quantityAxe = quantityAxe;   
+        this.customer = customer;
     }
 
     public Integer getQuantityBeer() {
@@ -61,6 +64,7 @@ public class Basket implements Serializable, BasketDTO {
         this.quantityAxe = quantityAxe;
     }
     
+    @Override
     public void add (Integer amount, Type type) {
         switch (type) {
             case BEER : 
@@ -82,9 +86,20 @@ public class Basket implements Serializable, BasketDTO {
             quantityAxe = 0;
         }
     
-
+    @Override
+    public Integer getQuantity(Type type){
+        switch (type) {
+            case BEER : 
+                return quantityBeer;
+            case BEARDED :
+                return quantityBearded;
+            case AXE :
+                return quantityAxe;
+        }
+        return null;
+    }
     
-/*
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -109,5 +124,5 @@ public class Basket implements Serializable, BasketDTO {
     public String toString() {
         return "webShop.model.Basket[ id=" + id + " ]";
     }
-    */
+    
 }

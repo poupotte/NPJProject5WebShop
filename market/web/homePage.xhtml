@@ -11,56 +11,11 @@
              <p>
                 <h:outputLabel for="pseudo" value="#{homePageManager.userName}"/> 
              </p>
-             <h2>Inventory :</h2>
-             <p>
-                <h:outputText value="Gnome with a beer :"/> 
-             </p>
-             <p>
-                <h:outputText value ="Quantity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityBeer}" />
-             </p>
-        
-             <p>
-                <h:outputText value="Gnome with an axe"/> 
-             </p>
-             <p>
-                <h:outputText value ="Quantity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityAxe}" />
-             </p>
-        
-             <p>
-                <h:outputText value="Bearded gnome"/> 
-             </p>
-             <p>
-                <h:outputText value ="Quantity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityBearded}" />
-             </p>
-        
-             <h2>Your basket :</h2> 
-        
-             <p>
-                <h:outputText value="Gnome with a beer :"/> 
-             </p>
-             <p>
-                <h:outputText value ="Quantity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityBeerBasket}" />
-             </p>
-        
-             <p>
-                <h:outputText value="Gnome with an axe"/> 
-             </p>
-             <p>
-                <h:outputText value ="Quantity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityAxeBasket}" />
-             </p>
-        
-             <p>
-                <h:outputText value="Bearded gnome"/> 
-             </p>
-             <p>
-                <h:outputText value ="Quantity :"/> 
-                <h:outputLabel value="#{homePageManager.quantityBeardedBasket}" />
-             </p>
+        <h:form>
+            <h:commandButton value="See inventory" action="#{homePageManager.redirectInventory}"/>
+            <h:commandButton value="See my basket" action="#{homePageManager.redirectBasket}"/>
+        </h:form>
+            
         <h:form>
             <h:selectOneMenu id="Gnomes" value="#{homePageManager.boughtGnomeType}">
                         <f:selectItem itemLabel="Bearded gnome" itemValue="BEARDED"/>
@@ -68,10 +23,11 @@
                         <f:selectItem  itemLabel="Gnome with a beer" itemValue="BEER"/>
             </h:selectOneMenu>
             <h:inputText value="#{homePageManager.boughtAmount}" />
-            <h:commandButton value="Put in the basket" action="#{homePageManager.putInBasket}"/>
+            <h:commandButton value="Put in the basket" action="#{homePageManager.putInBasket}" />
         </h:form>
         <h:form>
-            <h:commandButton value="Buy" action="#{homePageManager.buy}"/>
+            <h:commandButton value="Buy my basket" action="#{homePageManager.buy}" rendered="#{!homePageManager.isBuy}"/>
+            <h:commandButton value="Pay my purchase" action="#{homePageManager.pay}" rendered="#{homePageManager.isBuy}"/>
         </h:form>
         
              <p>

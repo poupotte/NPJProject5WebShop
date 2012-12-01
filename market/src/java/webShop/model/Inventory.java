@@ -23,9 +23,16 @@ public class Inventory implements Serializable, InventoryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @OneToMany(mappedBy = "inventory")
-    private List<Gnome> gnomes;
+    private Gnome []gnomes = new Gnome[3];
+  /*  @OneToMany(mappedBy = "inventory")
+    private List<Gnome> gnomes;*/
+    private final Integer beer = 1;
+    private final Integer bearded = 2;
+    private final Integer axe = 3;
     
+    public Inventory(){
+        this.id = 1;
+    }
 
     @Override
     public Integer getId() {
@@ -35,8 +42,87 @@ public class Inventory implements Serializable, InventoryDTO {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+      public Gnome getBeerGnome() {
+        return gnomes[beer];
+    }
 
-    @Override
+    public Gnome getBeardedGnome() {
+        return gnomes[bearded];
+    }
+
+    public Gnome getAxeGnome() {
+        return gnomes[axe];
+    }
+
+    public void setBeerGnome(Gnome beerGnome) {
+        this.gnomes[beer] = beerGnome;
+    }
+
+    public void setBeardedGnome(Gnome beardedGnome) {
+        this.gnomes[bearded] = beardedGnome;
+    }
+
+    public void setAxeGnome(Gnome axeGnome) {
+        this.gnomes[axe] = axeGnome;
+    }
+    
+    public void add (Integer amount, Type type) {
+        switch (type) {
+            case BEER : 
+                gnomes[beer].setAmount(gnomes[beer].getAmount() + amount);
+                break;
+            case BEARDED :
+                gnomes[bearded].setAmount(gnomes[bearded].getAmount() + amount);
+                break;
+            case AXE :
+                gnomes[axe].setAmount(gnomes[axe].getAmount() + amount);
+                break;
+        }
+    }
+    
+    public void remove (Integer amount, Type type) {
+        switch (type) {
+            case BEER : 
+                gnomes[beer].setAmount(gnomes[beer].getAmount() - amount);
+                break;
+            case BEARDED :
+                gnomes[bearded].setAmount(gnomes[bearded].getAmount() - amount);
+                break;
+            case AXE :
+                gnomes[axe].setAmount(gnomes[axe].getAmount() - amount);
+                break;
+        }
+    }
+    
+    public void addNewGnome(Gnome gnome){
+        switch (gnome.getType()) {
+            case BEER : 
+                gnomes[beer] = gnome;
+                break;
+            case BEARDED :
+                gnomes[bearded] = gnome;
+                break;
+            case AXE :
+                gnomes[axe] = gnome;
+                break;
+        }
+    }
+    
+    public Integer getQuantity(Type type){
+        switch (type) {
+            case BEER : 
+                return gnomes[beer].getAmount();
+            case BEARDED :
+                return gnomes[bearded].getAmount();
+            case AXE :
+                return gnomes[axe].getAmount();
+        }
+        return null;
+    }
+        
+
+   /* @Override
     public Iterator<Gnome> getGnomes(){
         Iterator<Gnome> it = gnomes.iterator();
         return it;
@@ -51,7 +137,7 @@ public class Inventory implements Serializable, InventoryDTO {
     @Override
     public void removeGnome(Gnome gnome) {
         gnomes.remove(gnome);
-    }
+    }*/
     
     @Override
     public int hashCode() {

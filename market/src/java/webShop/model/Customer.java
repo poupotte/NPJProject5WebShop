@@ -26,6 +26,8 @@ public class Customer implements Serializable, CustomerDTO {
     private String pseudo;
     private String password;
     private Boolean isLog;
+    private Integer money;
+    private Integer debt;
     @OneToOne(mappedBy = "customer")
     private Basket basket;
     
@@ -33,7 +35,9 @@ public class Customer implements Serializable, CustomerDTO {
         this.pseudo = pseudo;
         this.password = password;
         this.isLog = true;
-        this.basket = new Basket(0,0,0);
+        this.basket = new Basket(0,0,0, this);
+        this.money = 100;
+        this.debt = 0;
     }
     
     public Customer(){
@@ -52,6 +56,24 @@ public class Customer implements Serializable, CustomerDTO {
     @Override
     public void setIsLog(Boolean isLog) {
         this.isLog = isLog;
+    }
+
+    @Override
+    public void setMoney(Integer money) {
+        this.money = money;
+    }
+
+    public void setDebt(Integer debt) {
+        this.debt = debt;
+    }
+
+    public Integer getDebt() {
+        return debt;
+    }
+
+    @Override
+    public Integer getMoney() {
+        return money;
     }
 
     @Override

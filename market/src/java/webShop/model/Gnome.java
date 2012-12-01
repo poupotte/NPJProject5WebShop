@@ -23,8 +23,8 @@ public class Gnome implements Serializable, GnomeDTO {
     private Type type;
     private Integer price;
     private Integer amount;
-    @ManyToOne ()
-    private Inventory inventory;
+    /*@ManyToOne ()
+    private Inventory inventory;*/
 
     public Gnome() {
     }
@@ -33,7 +33,7 @@ public class Gnome implements Serializable, GnomeDTO {
         this.price = price;
         this.type = type;
         this.amount = amount;
-        this.inventory = inventory;
+        //this.inventory = inventory;
     }
     
 

@@ -14,4 +14,6 @@ public interface BasketDTO {
     
     public void emptyBasket();
     
+    public Integer getQuantity(Type type);
+    
 }
