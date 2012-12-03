@@ -5,100 +5,29 @@
 package webShop.model;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *
  * @author zoe
  */
 @Entity
-public class Basket implements Serializable, BasketDTO {
+public class Basket implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    private Integer quantityBeer;
-    private Integer quantityBearded;
-    private Integer quantityAxe;
-    @OneToOne (cascade = CascadeType.PERSIST)
-    private Customer customer;
-    
+    private Long id;
 
-    public Basket() {
+    public Long getId() {
+        return id;
     }
 
-    public Basket(Integer quantityBeer, Integer quantityBearded, Integer quantityAxe, Customer customer) {
-        this.quantityBeer = quantityBeer;
-        this.quantityBearded = quantityBearded;   
-        this.quantityAxe = quantityAxe;   
-        this.customer = customer;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public Integer getQuantityBeer() {
-        return quantityBeer;
-    }
-
-    public Integer getQuantityBearded() {
-        return quantityBearded;
-    }
-
-    public Integer getQuantityAxe() {
-        return quantityAxe;
-    }
-
-    public void setQuantityBeer(Integer quantityBeer) {
-        this.quantityBeer = quantityBeer;
-    }
-
-    public void setQuantityBearded(Integer quantityBearded) {
-        this.quantityBearded = quantityBearded;
-    }
-
-    public void setQuantityAxe(Integer quantityAxe) {
-        this.quantityAxe = quantityAxe;
-    }
-    
-    @Override
-    public void add (Integer amount, Type type) {
-        switch (type) {
-            case BEER : 
-                quantityBeer = quantityBeer + amount;
-                break;
-            case BEARDED :
-                quantityBearded = quantityBearded + amount;
-                break;
-            case AXE :
-                quantityAxe = quantityAxe + amount;
-                break;
-        }
-    }
-        
-    @Override
-        public void emptyBasket(){
-            quantityBeer = 0;
-            quantityBearded = 0;
-            quantityAxe = 0;
-        }
-    
-    @Override
-    public Integer getQuantity(Type type){
-        switch (type) {
-            case BEER : 
-                return quantityBeer;
-            case BEARDED :
-                return quantityBearded;
-            case AXE :
-                return quantityAxe;
-        }
-        return null;
-    }
-    
 
     @Override
     public int hashCode() {

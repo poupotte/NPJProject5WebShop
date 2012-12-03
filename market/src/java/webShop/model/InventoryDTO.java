@@ -13,7 +13,7 @@ import java.util.Iterator;
 public interface InventoryDTO {
     
     public Integer getId();
-    
+        
     public Gnome getBeerGnome();
 
     public Gnome getBeardedGnome();

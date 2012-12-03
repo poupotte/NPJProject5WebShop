@@ -20,12 +20,20 @@ public interface CustomerDTO {
 
       public Integer getDebt();
       
+      public String getPseudo();
+      
+      public void setPseudo(String pseudo);
+      
       public void setIsLog(Boolean isLog);
       
       public void setMoney(Integer money);
       
       public Integer getMoney() ;
       
-      public Basket getBasket();
+      public void add (Integer amount, Type type);
+    
+      public void emptyBasket();
+    
+      public Integer getQuantity(Type type);
 
 }

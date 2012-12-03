@@ -28,8 +28,8 @@ public class HomePageManager implements Serializable {
     private Boolean logedIn;
     private Boolean isBuy = false;
     private String userName;
-    private Type boughtGnomeType;
-    private Integer boughtAmount;
+    private Type boughtGnomeType; // Type of gnome to put in the basket
+    private Integer boughtAmount; // Amount of gnome to put in the basket
     private Exception transactionFailure;
     private String error;
     @ManagedProperty(value="#{inventoryPageManager}")
@@ -86,6 +86,23 @@ public class HomePageManager implements Serializable {
 
     public void setIsBuy(Boolean isBuy) {
         this.isBuy = isBuy;
+    }
+    
+    public Integer getBasketAmount(){
+        startConversation();
+        return webShopFacade.getBasketAmount(userName);
+    }
+    
+    public void setBasketAmount(Integer amount){
+        int i = 1;
+    }
+    
+    public Integer getAccountAmount(){
+        startConversation();
+        return webShopFacade.getMoney(userName);
+    }
+    public void setAccountAmount(Integer amount){
+        int i = 1;
     }
 
     public Type getBoughtGnomeType() {
@@ -188,14 +205,14 @@ public class HomePageManager implements Serializable {
                 (webShopFacade.getQuantityInInventory(Type.BEER) < quantityBearded)||
                 (webShopFacade.getQuantityInInventory(Type.BEER) < quantityAxe)){
                 error = "Error : There are not enough gnomes";
-            } else if(webShopFacade.getAmount(userName) < webShopFacade.getMoney(userName)) {
+            } else if(webShopFacade.getBasketAmount(userName) > webShopFacade.getMoney(userName)) {
                 error = "Error : You have not enough money";                
             } else {
-                webShopFacade.setDebt(userName, webShopFacade.getAmount(userName));
-                webShopFacade.removeGnomeToBasket(userName);
-                webShopFacade.removeGnomeToInventory(Type.BEER, boughtAmount); 
-                webShopFacade.removeGnomeToInventory(Type.BEARDED, boughtAmount); 
-                webShopFacade.removeGnomeToInventory(Type.AXE, boughtAmount); 
+                webShopFacade.setDebt(userName, webShopFacade.getBasketAmount(userName));
+                webShopFacade.emptyBasket(userName);
+                webShopFacade.removeGnomeToInventory(Type.BEER, quantityBeer); 
+                webShopFacade.removeGnomeToInventory(Type.BEARDED, quantityBearded); 
+                webShopFacade.removeGnomeToInventory(Type.AXE, quantityAxe); 
                 isBuy = true;
             }
         } catch (Exception e) {
@@ -214,13 +231,19 @@ public class HomePageManager implements Serializable {
         
     }
     
+    public void emptyBasket(){
+        startConversation();
+        webShopFacade.emptyBasket(userName);
+    }
+    
     public void redirectInventory(){
-        inventoryPageManager.setCurrentPseudo(userName);
+        inventoryPageManager.setHomePageManager(this);
         inventoryPageManager.setLogIn(true);
     }
     
     public void redirectBasket(){
-        basketPageManager.setCurrentPseudo(userName);
+        basketPageManager.setPseudo(userName);    
+        basketPageManager.setHomePageManager(this);
         basketPageManager.setLogIn(true);        
     }
 }

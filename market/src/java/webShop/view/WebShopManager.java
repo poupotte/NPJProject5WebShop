@@ -7,7 +7,6 @@ package webShop.view;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -162,6 +161,7 @@ public class WebShopManager implements Serializable {
                                                     currentPassword);
                 homePageManager.setUserName(customer.getId());
                 homePageManager.setLogIn();
+                webShopFacade.createInventory();
             }
         } catch (Exception e) {
             handleException(e);

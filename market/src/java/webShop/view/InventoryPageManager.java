@@ -10,10 +10,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 import webShop.controller.WebShopFacade;
-import webShop.model.CustomerDTO;
 import webShop.model.Type;
 
 /**
@@ -26,9 +24,8 @@ public class InventoryPageManager implements Serializable {
     private static final long serialVersionUID = 16247164406L;
     @EJB
     private WebShopFacade webShopFacade;
-    private String currentPseudo;
+    private HomePageManager homePageManager;
     private Boolean logIn;
-    private Map<Type,Integer> quantity;
     private String error = null;
     private Exception transactionFailure;
     @Inject
@@ -41,15 +38,18 @@ public class InventoryPageManager implements Serializable {
     }
     
      public Integer getQuantityBeer() {
-        return quantity.get(Type.BEER);
+         startConversation();
+        return webShopFacade.getQuantityInInventory(Type.BEER);
     }
 
     public Integer getQuantityAxe() {
-        return quantity.get(Type.AXE);
+         startConversation();
+        return webShopFacade.getQuantityInInventory(Type.AXE);
     }
 
     public Integer getQuantityBearded() {
-        return quantity.get(Type.BEARDED);
+         startConversation();
+        return webShopFacade.getQuantityInInventory(Type.BEARDED);
     }
 
     
@@ -57,41 +57,36 @@ public class InventoryPageManager implements Serializable {
         return error;
     }
 
-    public String getCurrentPseudo() {
-        return currentPseudo;
-    }
-
     public Boolean getLogIn() {
         return logIn;
+    }
+
+    public HomePageManager getHomePageManager() {
+        return homePageManager;
+    }
+
+    public void setHomePageManager(HomePageManager homePageManager) {
+        this.homePageManager = homePageManager;
     }
 
     public void setLogIn(Boolean logIn) {
         this.logIn = logIn;
     }
 
-    
-    public void setCurrentPseudo(String currentPseudo) {
-        this.currentPseudo = currentPseudo;
-    }
-
-   
     public void setError(String error) {
         this.error = error;
     }
     
     public void setQuantityBeer(Integer newQuantity) {
-        quantity.remove(Type.BEER);
-        quantity.put(Type.BEER, newQuantity);      
+        int i = 1;      
     }
 
     public void setQuantityAxe(Integer newQuantity) {
-        quantity.remove(Type.AXE);
-        quantity.put(Type.AXE, newQuantity); 
+        int i = 1; 
     }
 
     public void setQuantityBearded(Integer newQuantity) {
-        quantity.remove(Type.BEARDED);
-        quantity.put(Type.BEARDED, newQuantity); 
+        int i = 1; 
     }
     
      private void handleException(Exception e) {
@@ -134,10 +129,8 @@ public class InventoryPageManager implements Serializable {
         return transactionFailure;
     }
     
-   /* public void redirect(){
-            CustomerDTO customer = webShopFacade.getCustomer(currentPseudo);
-            homePageManager.setUserName(customer.getId());
-            homePageManager.setLogIn();
-    }*/
+    public void redirect(){
+            this.logIn = false;
+    }
     
 }

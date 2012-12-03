@@ -5,14 +5,10 @@
 package webShop.model;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,20 +20,24 @@ public class Customer implements Serializable, CustomerDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String pseudo;
+    
     private String password;
     private Boolean isLog;
     private Integer money;
     private Integer debt;
-    @OneToOne(mappedBy = "customer")
-    private Basket basket;
+    private Integer quantityBeer;
+    private Integer quantityBearded;
+    private Integer quantityAxe;
     
     public Customer (String pseudo,String password) {
         this.pseudo = pseudo;
         this.password = password;
         this.isLog = true;
-        this.basket = new Basket(0,0,0, this);
         this.money = 100;
         this.debt = 0;
+        this.quantityAxe = 0;
+        this.quantityBearded = 0;
+        this.quantityBeer = 0;
     }
     
     public Customer(){
@@ -63,10 +63,12 @@ public class Customer implements Serializable, CustomerDTO {
         this.money = money;
     }
 
+    @Override
     public void setDebt(Integer debt) {
         this.debt = debt;
     }
 
+    @Override
     public Integer getDebt() {
         return debt;
     }
@@ -86,13 +88,77 @@ public class Customer implements Serializable, CustomerDTO {
         return isLog;
     }
 
+    @Override
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    @Override
+    public String getPseudo() {
+        return pseudo;
+    }
+
     public void setId(String id) {
         this.pseudo = id;
     }
     
+     public Integer getQuantityBeer() {
+        return quantityBeer;
+    }
+
+    public Integer getQuantityBearded() {
+        return quantityBearded;
+    }
+
+    public Integer getQuantityAxe() {
+        return quantityAxe;
+    }
+
+    public void setQuantityBeer(Integer quantityBeer) {
+        this.quantityBeer = quantityBeer;
+    }
+
+    public void setQuantityBearded(Integer quantityBearded) {
+        this.quantityBearded = quantityBearded;
+    }
+
+    public void setQuantityAxe(Integer quantityAxe) {
+        this.quantityAxe = quantityAxe;
+    }
     
-    public Basket getBasket(){
-        return basket;
+   
+    public void add (Integer amount, Type type) {
+        switch (type) {
+            case BEER : 
+                quantityBeer = quantityBeer + amount;
+                break;
+            case BEARDED :
+                quantityBearded = quantityBearded + amount;
+                break;
+            case AXE :
+                quantityAxe = quantityAxe + amount;
+                break;
+        }
+    }
+        
+    @Override
+        public void emptyBasket(){
+            quantityBeer = 0;
+            quantityBearded = 0;
+            quantityAxe = 0;
+        }
+    
+    @Override
+    public Integer getQuantity(Type type){
+        switch (type) {
+            case BEER : 
+                return quantityBeer;
+            case BEARDED :
+                return quantityBearded;
+            case AXE :
+                return quantityAxe;
+        }
+        return null;
     }
 
     @Override

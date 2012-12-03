@@ -9,7 +9,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import webShop.model.BasketDTO;
 import webShop.model.Customer;
 import webShop.model.CustomerDTO;
 import webShop.model.Gnome;
@@ -27,6 +26,7 @@ public class WebShopFacade {
     
     @PersistenceContext(unitName = "marketPU")
     private EntityManager em;
+    private Boolean inventoryInitialize = false;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
@@ -96,14 +96,14 @@ public class WebShopFacade {
      public void addGnome(Type type,Integer amount) {
         InventoryDTO inventory = em.find(Inventory.class, 1);
         inventory.add(amount, type);        
-        em.getTransaction().commit();
+        em.merge(inventory);
     }
     
     public void removeGnomeToInventory(Type type, Integer amount){
         InventoryDTO inventory = em.find(Inventory.class, 1);
         inventory.remove(amount, type);
         //em.remove(gnome);
-        em.getTransaction().commit();
+        em.merge(inventory);
     }
     
     public Integer getQuantityInInventory(Type type) {
@@ -117,33 +117,42 @@ public class WebShopFacade {
     
     public void addGnomeToBasket(Integer amount, Type type, String nameCustomer){
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
-        BasketDTO basket = customer.getBasket();
-        basket.add(amount, type);
-        em.merge(basket);
+        customer.add(amount, type);
+        em.merge(customer);
     }
     
     public void removeGnomeToBasket(String nameCustomer) {
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
-        BasketDTO basket = customer.getBasket();
-        basket.emptyBasket();
-        em.merge(basket);
+        customer.emptyBasket();
+        em.merge(customer);
     }
     
     public Integer getQuantityInBasket(Type type, String nameCustomer){
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
-        BasketDTO basket = customer.getBasket();
-        return basket.getQuantity(type);   
+        return customer.getQuantity(type);   
     }  
     
-    public Integer getAmount(String nameCustomer){
+    public Integer getBasketAmount(String nameCustomer){
         InventoryDTO inventory = em.find(Inventory.class, 1);
         Integer priceAxe = inventory.getAxeGnome().getPrice();
         Integer priceBearded = inventory.getBeardedGnome().getPrice();
         Integer priceBeer = inventory.getBeerGnome().getPrice();
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
-        BasketDTO basket = customer.getBasket();
-        return priceAxe*basket.getQuantity(Type.AXE) +
-                priceBearded*basket.getQuantity(Type.BEARDED)+
-                priceBeer*basket.getQuantity(Type.BEER);
+        return priceAxe*customer.getQuantity(Type.AXE) +
+                priceBearded*customer.getQuantity(Type.BEARDED)+
+                priceBeer*customer.getQuantity(Type.BEER);
+    }
+    
+    public void createInventory(){
+        if (!inventoryInitialize) {
+            InventoryDTO inventory = new Inventory(1);
+            inventoryInitialize = true;
+            em.persist(inventory);
+        }   
+    }
+    
+    public void emptyBasket(String pseudo){
+        CustomerDTO customer = em.find(Customer.class, pseudo);
+        customer.emptyBasket();
     }
 }

@@ -26,6 +26,19 @@
             <h:commandButton value="Put in the basket" action="#{homePageManager.putInBasket}" />
         </h:form>
         <h:form>
+            <h:commandButton value="Empty my basket" action="#{homePageManager.emptyBasket}" rendered="#{!homePageManager.isBuy}"/>
+        </h:form>
+             <p>
+                <h:outputLabel  value="Amount of your basket : "/> 
+                <h:outputLabel  value="#{homePageManager.basketAmount}"/> 
+             </p>
+        
+             <p>
+                <h:outputLabel  value="Amount of your money : "/> 
+                <h:outputLabel  value="#{homePageManager.accountAmount}"/> 
+             </p>
+        
+        <h:form>
             <h:commandButton value="Buy my basket" action="#{homePageManager.buy}" rendered="#{!homePageManager.isBuy}"/>
             <h:commandButton value="Pay my purchase" action="#{homePageManager.pay}" rendered="#{homePageManager.isBuy}"/>
         </h:form>

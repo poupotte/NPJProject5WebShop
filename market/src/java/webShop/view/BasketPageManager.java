@@ -5,15 +5,12 @@
 package webShop.view;
 
 import java.io.Serializable;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 import webShop.controller.WebShopFacade;
-import webShop.model.CustomerDTO;
 import webShop.model.Type;
 
 /**
@@ -26,9 +23,9 @@ public class BasketPageManager implements Serializable {
     private static final long serialVersionUID = 16247164406L;
     @EJB
     private WebShopFacade webShopFacade;
-    private String currentPseudo;
+    private HomePageManager homePageManager;
+    private String pseudo;
     private Boolean logIn;
-    private Map<Type,Integer> quantity;
     private String error = null;
     private Exception transactionFailure;
     @Inject
@@ -41,15 +38,18 @@ public class BasketPageManager implements Serializable {
     }
     
      public Integer getQuantityBeer() {
-        return quantity.get(Type.BEER);
+        startConversation(); 
+        return webShopFacade.getQuantityInBasket(Type.BEER, pseudo);
     }
 
     public Integer getQuantityAxe() {
-        return quantity.get(Type.AXE);
+        startConversation(); 
+        return webShopFacade.getQuantityInBasket(Type.AXE, pseudo);
     }
 
     public Integer getQuantityBearded() {
-        return quantity.get(Type.BEARDED);
+        startConversation(); 
+        return webShopFacade.getQuantityInBasket(Type.BEARDED, pseudo);
     }
 
     
@@ -57,13 +57,31 @@ public class BasketPageManager implements Serializable {
         return error;
     }
 
-    public String getCurrentPseudo() {
-        return currentPseudo;
+    public HomePageManager getHomePageManager() {
+        return homePageManager;
     }
 
-    public void setCurrentPseudo(String currentPseudo) {
-        this.currentPseudo = currentPseudo;
+    public String getPseudo() {
+        return pseudo;
     }
+    
+    public Integer getAmount(){
+        startConversation();
+        return webShopFacade.getBasketAmount(pseudo);
+    }
+    
+    public void setAmount(Integer amount){
+        int i = 1;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public void setHomePageManager(HomePageManager homePageManager) {
+        this.homePageManager = homePageManager;
+    }
+
 
     public Boolean getLogIn() {
         return logIn;
@@ -79,18 +97,15 @@ public class BasketPageManager implements Serializable {
     }
     
     public void setQuantityBeer(Integer newQuantity) {
-        quantity.remove(Type.BEER);
-        quantity.put(Type.BEER, newQuantity);      
+        int i = 1;      
     }
 
     public void setQuantityAxe(Integer newQuantity) {
-        quantity.remove(Type.AXE);
-        quantity.put(Type.AXE, newQuantity); 
+        int i = 1; 
     }
 
     public void setQuantityBearded(Integer newQuantity) {
-        quantity.remove(Type.BEARDED);
-        quantity.put(Type.BEARDED, newQuantity); 
+        int i = 1; 
     }
     
      private void handleException(Exception e) {
@@ -133,10 +148,8 @@ public class BasketPageManager implements Serializable {
         return transactionFailure;
     }
     
-   /* public void redirect(){
-            CustomerDTO customer = webShopFacade.getCustomer(currentPseudo);
-            homePageManager.setUserName(customer.getId());
-            homePageManager.setLogIn();
-    }*/
+    public void redirect(){
+         logIn = false;
+    }
     
 }

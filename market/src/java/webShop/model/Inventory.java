@@ -5,13 +5,10 @@
 package webShop.model;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,15 +20,23 @@ public class Inventory implements Serializable, InventoryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Gnome []gnomes = new Gnome[3];
+    
+    private Gnome []gnomes= new Gnome[3];;
   /*  @OneToMany(mappedBy = "inventory")
     private List<Gnome> gnomes;*/
-    private final Integer beer = 1;
-    private final Integer bearded = 2;
-    private final Integer axe = 3;
+    private final Integer beer = 0;
+    private final Integer bearded = 1;
+    private final Integer axe = 2;
     
     public Inventory(){
-        this.id = 1;
+        
+    }
+    
+    public Inventory(Integer id){
+        this.id = id;
+        gnomes[beer]= new Gnome(10, Type.BEER, 10, this);
+        gnomes[bearded]= new Gnome(12, Type.BEARDED, 10, this);
+        gnomes[axe]= new Gnome(15, Type.AXE, 10, this);
     }
 
     @Override
@@ -67,6 +72,7 @@ public class Inventory implements Serializable, InventoryDTO {
         this.gnomes[axe] = axeGnome;
     }
     
+    @Override
     public void add (Integer amount, Type type) {
         switch (type) {
             case BEER : 
@@ -81,6 +87,21 @@ public class Inventory implements Serializable, InventoryDTO {
         }
     }
     
+    @Override
+    public Integer getQuantity(Type type){
+        switch (type) {
+            case BEER : 
+                return gnomes[beer].getAmount();
+            case BEARDED :
+                return gnomes[bearded].getAmount();
+            case AXE :
+                return gnomes[axe].getAmount();
+        }
+        return null;
+        
+    }
+    
+    @Override
     public void remove (Integer amount, Type type) {
         switch (type) {
             case BEER : 
@@ -109,17 +130,6 @@ public class Inventory implements Serializable, InventoryDTO {
         }
     }
     
-    public Integer getQuantity(Type type){
-        switch (type) {
-            case BEER : 
-                return gnomes[beer].getAmount();
-            case BEARDED :
-                return gnomes[bearded].getAmount();
-            case AXE :
-                return gnomes[axe].getAmount();
-        }
-        return null;
-    }
         
 
    /* @Override
