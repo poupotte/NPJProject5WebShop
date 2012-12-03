@@ -9,6 +9,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import webShop.model.Administrator;
+import webShop.model.AdministratorDTO;
 import webShop.model.Customer;
 import webShop.model.CustomerDTO;
 import webShop.model.Gnome;
@@ -82,17 +84,20 @@ public class WebShopFacade {
         em.merge(customer);
     }
     
+    public Boolean ban(String pseudo){
+        CustomerDTO customer = em.find(Customer.class, pseudo);
+        if (customer == null) {
+            return false;
+        } else {
+            customer.setIsbanned(true);
+            em.merge(customer);
+            return true;            
+        }
+    }
+        
     
     /* Inventory Management */
-      
-    public void addGnome(Integer price, Type type,Integer amount) {
-        InventoryDTO inventory = em.find(Inventory.class, 1);
-        Gnome gnome = new Gnome(price, type, amount, (Inventory) inventory);
-        em.persist(gnome);
-        inventory.addNewGnome(gnome);        
-        em.getTransaction().commit();
-    }
-    
+          
      public void addGnome(Type type,Integer amount) {
         InventoryDTO inventory = em.find(Inventory.class, 1);
         inventory.add(amount, type);        
@@ -112,6 +117,18 @@ public class WebShopFacade {
         return quantity;
     }
     
+    public Integer getPrice(Type type){
+        InventoryDTO inventory = em.find(Inventory.class, 1);
+        switch (type) {
+            case BEER : 
+                return inventory.getBeerGnome().getPrice();
+            case BEARDED : 
+                return inventory.getBeardedGnome().getPrice();
+            case AXE : 
+                return inventory.getAxeGnome().getPrice();                
+        }
+        return null;
+    }
     
     /* Basket Management */
     
@@ -143,6 +160,29 @@ public class WebShopFacade {
                 priceBeer*customer.getQuantity(Type.BEER);
     }
     
+    
+    
+    
+    public void emptyBasket(String pseudo){
+        CustomerDTO customer = em.find(Customer.class, pseudo);
+        customer.emptyBasket();
+    }
+    
+    /* Management of Administrator */
+    
+    public void createAdministrator(String pseudo, String password){
+        AdministratorDTO administrator = new Administrator(pseudo, password);
+        em.persist(administrator);        
+    }
+    
+    public AdministratorDTO getAdministrator(String pseudo){
+        AdministratorDTO administrator = em.find(Administrator.class, pseudo);
+        return administrator;
+    }
+    
+    /* Initialization */
+    
+    
     public void createInventory(){
         if (!inventoryInitialize) {
             InventoryDTO inventory = new Inventory(1);
@@ -151,8 +191,10 @@ public class WebShopFacade {
         }   
     }
     
-    public void emptyBasket(String pseudo){
-        CustomerDTO customer = em.find(Customer.class, pseudo);
-        customer.emptyBasket();
+    public void init(){
+        if (em.find(Inventory.class, 1) == null) {
+            createInventory();
+            createAdministrator("root", "javajava");
+        }
     }
 }

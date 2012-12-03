@@ -28,6 +28,7 @@ public class Customer implements Serializable, CustomerDTO {
     private Integer quantityBeer;
     private Integer quantityBearded;
     private Integer quantityAxe;
+    private Boolean isbanned;
     
     public Customer (String pseudo,String password) {
         this.pseudo = pseudo;
@@ -38,11 +39,13 @@ public class Customer implements Serializable, CustomerDTO {
         this.quantityAxe = 0;
         this.quantityBearded = 0;
         this.quantityBeer = 0;
-    }
+        this.isbanned = false;    }
     
     public Customer(){
         
     }
+    
+    /* Getter and Setter */
     
     @Override
     public String getId() {
@@ -66,6 +69,14 @@ public class Customer implements Serializable, CustomerDTO {
     @Override
     public void setDebt(Integer debt) {
         this.debt = debt;
+    }
+
+    public Boolean getIsbanned() {
+        return isbanned;
+    }
+
+    public void setIsbanned(Boolean isbanned) {
+        this.isbanned = isbanned;
     }
 
     @Override
@@ -126,7 +137,9 @@ public class Customer implements Serializable, CustomerDTO {
         this.quantityAxe = quantityAxe;
     }
     
+    /* Management of customer */
    
+    @Override
     public void add (Integer amount, Type type) {
         switch (type) {
             case BEER : 

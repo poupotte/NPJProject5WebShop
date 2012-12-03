@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Administrator</title>
+    </h:head>
+    <h:body>
+        <h2> Inventory </h2>
+            <p>
+                <h:outputText value="Gnome with a beer :"/>  
+                <h:outputLabel value="#{administratorPageManager.quantityBeer}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Gnome with an axe :"/> 
+                <h:outputLabel value="#{administratorPageManager.quantityAxe}" />
+             </p>
+        
+             <p>
+                <h:outputText value="Bearded gnome :"/> 
+                <h:outputLabel value="#{administratorPageManager.quantityBearded}" />
+             </p> 
+        
+        <h:form>
+            <h:selectOneMenu id="Gnomes" value="#{administratorPageManager.gnomeType}">
+                        <f:selectItem itemLabel="Bearded gnome" itemValue="BEARDED"/>
+                        <f:selectItem  itemLabel="Gnome with an axe" itemValue="AXE"/>
+                        <f:selectItem  itemLabel="Gnome with a beer" itemValue="BEER"/>
+            </h:selectOneMenu>
+            <h:inputText value="#{administratorPageManager.gnomeAmount}" />
+            <p>
+            <h:commandButton value="Add in the inventory" action="#{administratorPageManager.addInInventory}" />
+            <h:commandButton value="Remove in the inventory" action="#{administratorPageManager.removeInInventory}" />
+            </p>
+        </h:form>
+        
+        <h2> Ban a user : </h2>
+        <h:form>
+            <h:outputText value="User name : " />
+            <h:inputText value="#{administratorPageManager.userName}" />
+            <h:commandButton value="Ban user" action="#{administratorPageManager.banUser}" />
+        </h:form>
+        <p></p>
+        <h2>Create a new administrator</h2>
+        <h:form>
+            <p>
+            <h:outputText value="Administrator name : " />
+            <h:inputText value="#{administratorPageManager.newAdministratorName}" />
+            </p>
+            <p>
+            <h:outputText value="Password : " />
+            <h:inputSecret value="#{administratorPageManager.newAdministratorPassword}" />
+            </p>
+            <h:commandButton value="Create a new administrator" action="#{administratorPageManager.createAdministrator}" />
+        </h:form>
+         
+             <p>
+                 <h:outputText value="#{administratorPageManager.error}" rendered="#{administratorPageManager.error != null}" style="color:red"/>
+             </p>
+        
+        
+        <h:form>
+            <h:commandButton value="Logout" action="#{administratorPageManager.logOut}"/>
+        </h:form>
+    </h:body>
+</html>
+

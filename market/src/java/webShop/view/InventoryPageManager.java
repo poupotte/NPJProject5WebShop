@@ -64,6 +64,33 @@ public class InventoryPageManager implements Serializable {
     public HomePageManager getHomePageManager() {
         return homePageManager;
     }
+    
+    public Integer getPriceBeer() {
+        startConversation();
+        return webShopFacade.getPrice(Type.BEER);
+    }
+    
+    public void setPriceBeer(){
+        int i = 1;
+    }
+    
+    public Integer getPriceBearded() {
+        startConversation();
+        return webShopFacade.getPrice(Type.BEARDED);
+    }
+    
+    public void setPriceBearded(){
+        int i = 1;
+    }
+    
+    public Integer getPriceAxe() {
+        startConversation();
+        return webShopFacade.getPrice(Type.AXE);
+    }
+    
+    public void setPriceAxe(){
+        int i = 1;
+    }
 
     public void setHomePageManager(HomePageManager homePageManager) {
         this.homePageManager = homePageManager;

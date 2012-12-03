@@ -38,6 +38,13 @@
                 <h:outputLabel  value="#{homePageManager.accountAmount}"/> 
              </p>
         
+        
+             <p>
+                <h:outputLabel  value="Your debt : " rendered="#{homePageManager.isBuy}" /> 
+                <h:outputLabel  value="#{homePageManager.debt}" rendered="#{homePageManager.isBuy}" /> 
+             </p>
+        
+        
         <h:form>
             <h:commandButton value="Buy my basket" action="#{homePageManager.buy}" rendered="#{!homePageManager.isBuy}"/>
             <h:commandButton value="Pay my purchase" action="#{homePageManager.pay}" rendered="#{homePageManager.isBuy}"/>

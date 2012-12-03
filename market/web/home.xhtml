@@ -18,9 +18,15 @@
              <p>
                 <h:commandButton value="Login" action="#{webShopManager.loginCustomer}"/>
                 <h:commandButton value="Register" action="#{webShopManager.createNewCustomer}"/>
+                <h:commandButton value="Administrator" action="#{webShopManager.logAdministrator}"/>
              </p>
              <p>
                  <h:outputText value="#{webShopManager.error}" rendered="#{webShopManager.error != null}" style="color:red"/>
+             </p>
+            
+            
+             <p>
+                <h:commandButton value="Init" action="#{webShopManager.init}"/>
              </p>
         </h:form>
     </h:body>

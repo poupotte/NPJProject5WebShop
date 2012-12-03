@@ -25,7 +25,7 @@ public class HomePageManager implements Serializable {
     private static final long serialVersionUID = 16247164405L;
     @EJB
     private WebShopFacade webShopFacade;
-    private Boolean logedIn;
+    private Boolean logedIn = false;
     private Boolean isBuy = false;
     private String userName;
     private Type boughtGnomeType; // Type of gnome to put in the basket
@@ -40,32 +40,31 @@ public class HomePageManager implements Serializable {
     private Conversation conversation;
     
     
+    /**
+     * Creates a new instance of HomePageManager
+     */
+    public HomePageManager() {
+    }
+    
+    /*************************************************************************/
+    /* Getter and Setter */
 
     public String getError() {
         return error;
     }
-
    
     public void setError(String error) {
         this.error = error;
-    }
-
-    
+    }    
     
     public void setLogIn(){
         this.logedIn = true;
-    }
+    }    
     
-    
-    /**
-     * not used
-     * @return 
-     */
     public boolean getLogIn(){
         return logedIn;
     }
-    
-    
+        
     public void logOut(){
         startConversation();
         webShopFacade.logoutCustomer(this.userName);
@@ -101,6 +100,7 @@ public class HomePageManager implements Serializable {
         startConversation();
         return webShopFacade.getMoney(userName);
     }
+    
     public void setAccountAmount(Integer amount){
         int i = 1;
     }
@@ -135,9 +135,7 @@ public class HomePageManager implements Serializable {
 
     public void setBasketPageManager(BasketPageManager basketPageManager) {
         this.basketPageManager = basketPageManager;
-    }
-    
-    
+    }    
 
     public String getUserName() {
         return userName;
@@ -147,8 +145,18 @@ public class HomePageManager implements Serializable {
         this.userName = userName;
     }
     
-
+    public Integer getDebt(){
+        startConversation();
+        return webShopFacade.getDebt(userName);
+    }
     
+    public void setDebet(){
+        int i = 1;
+    }
+    
+    
+    /*************************************************************************/
+    /* Management conversation and exception */
     
     /**
      * Start the conversation with the bean
@@ -167,8 +175,7 @@ public class HomePageManager implements Serializable {
             conversation.end();
         }
     }
-    
-    
+        
     private void handleException(Exception e) {
         stopConversation();
         e.printStackTrace(System.err);
@@ -176,19 +183,18 @@ public class HomePageManager implements Serializable {
     }
     
     
-    /**
-     * Creates a new instance of HomePageManager
-     */
-    public HomePageManager() {
-    }
+    
+    /*************************************************************************/    
+    /* Management basket, pay and buy */
     
     public void putInBasket(){
         startConversation();
         try {
             if (webShopFacade.getQuantityInInventory(boughtGnomeType) < boughtAmount) {
-                error = "Error : There are not anough gnomes";
+                error = "Error : There are not enough gnomes";
             } else {
-                webShopFacade.addGnomeToBasket(boughtAmount, boughtGnomeType, userName); 
+                webShopFacade.addGnomeToBasket(boughtAmount, boughtGnomeType, userName);
+                error = null;
             }
         } catch (Exception e) {
             handleException(e);
@@ -214,6 +220,7 @@ public class HomePageManager implements Serializable {
                 webShopFacade.removeGnomeToInventory(Type.BEARDED, quantityBearded); 
                 webShopFacade.removeGnomeToInventory(Type.AXE, quantityAxe); 
                 isBuy = true;
+                error = null;
             }
         } catch (Exception e) {
             handleException(e);
@@ -236,12 +243,19 @@ public class HomePageManager implements Serializable {
         webShopFacade.emptyBasket(userName);
     }
     
+    
+    /* Redirection */
+        
     public void redirectInventory(){
+        boughtAmount = null;
+        error = null;
         inventoryPageManager.setHomePageManager(this);
         inventoryPageManager.setLogIn(true);
     }
     
     public void redirectBasket(){
+        boughtAmount = null;
+        error = null;
         basketPageManager.setPseudo(userName);    
         basketPageManager.setHomePageManager(this);
         basketPageManager.setLogIn(true);        

@@ -22,6 +22,10 @@ public interface CustomerDTO {
       
       public String getPseudo();
       
+      public Boolean getIsbanned();
+
+      public void setIsbanned(Boolean isbanned);
+      
       public void setPseudo(String pseudo);
       
       public void setIsLog(Boolean isLog);

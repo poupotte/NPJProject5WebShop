@@ -14,17 +14,6 @@ import javax.inject.Inject;
 import webShop.controller.*;
 import webShop.model.*;
 
-/*
-import java.io.Serializable;
-import javax.annotation.ManagedBean;
-import javax.ejb.EJB;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.faces.bean.ManagedProperty;
-import javax.inject.Inject;
-import webShop.controller.WebShopFacade;
-import webShop.model.CustomerDTO;
-*/
 /**
  *
  * @author zoe
@@ -39,12 +28,14 @@ public class WebShopManager implements Serializable {
     private String currentPseudo;
     private String currentPassword;
     private String error = null;
-    //private Boolean homePage = false;
     private Exception transactionFailure;
     @Inject
     private Conversation conversation;
     @ManagedProperty(value="#{homePageManager}")
     private HomePageManager homePageManager;
+    @ManagedProperty(value="#{administratorPageManager}")
+    private AdministratorPageManager administratorPageManager;
+    
     /**
      * Creates a new instance of webShopManager
      */
@@ -112,6 +103,14 @@ public class WebShopManager implements Serializable {
     public String getCurrentPassword() {
         return currentPassword;
     }
+
+    public AdministratorPageManager getAdministratorPageManager() {
+        return administratorPageManager;
+    }
+
+    public void setAdministratorPageManager(AdministratorPageManager administratorPageManager) {
+        this.administratorPageManager = administratorPageManager;
+    }
   
 
     public void setError(String error) {
@@ -135,6 +134,8 @@ public class WebShopManager implements Serializable {
                 error = "Error : This name does not exist";
             } else if (! (customer.getPassword().equals(currentPassword))) {
                 error = "Error : The password or the pseudo is not correct";
+            }else if (customer.getIsbanned()) {
+                error = "Error : This user has been banned";
             } else {
                 webShopFacade.loginCustomer(currentPseudo);
                 error = null;
@@ -161,12 +162,28 @@ public class WebShopManager implements Serializable {
                                                     currentPassword);
                 homePageManager.setUserName(customer.getId());
                 homePageManager.setLogIn();
-                webShopFacade.createInventory();
             }
         } catch (Exception e) {
             handleException(e);
         }
     
+    }
+    
+    public void init(){
+        startConversation();
+        webShopFacade.init();
+    }
+    
+    public void logAdministrator(){
+        startConversation();
+        AdministratorDTO administrator = webShopFacade.getAdministrator(currentPseudo);
+        if ((administrator == null) || 
+                (!administrator.getPassword().equals(currentPassword))) {
+            error = "Error : The password or the pseudo is not correct";
+        } else {
+            error = null;
+            administratorPageManager.setLogedIn(true);
+        }
     }
 
 }
