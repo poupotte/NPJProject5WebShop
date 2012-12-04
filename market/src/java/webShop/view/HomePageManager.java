@@ -260,7 +260,13 @@ public class HomePageManager implements Serializable {
             Integer quantityBeer = webShopFacade.getQuantityInBasket(Type.BEER, userName);
             Integer quantityBearded = webShopFacade.getQuantityInBasket(Type.BEARDED, userName);
             Integer quantityAxe = webShopFacade.getQuantityInBasket(Type.AXE, userName);
-            if ((webShopFacade.getQuantityInInventory(Type.BEER) < quantityBeer) ||
+            if ((quantityBeer>0) && (!webShopFacade.getIsAvailable(Type.BEER))){
+                error = "Error : Gnome with beer is no longer available";
+            } else if ((quantityAxe>0) && (!webShopFacade.getIsAvailable(Type.AXE))){
+                error = "Error : Gnome with axe is no longer available";
+            } else if ((quantityBearded>0) && (!webShopFacade.getIsAvailable(Type.BEARDED))){
+                error = "Error : Bearded gnome is no longer available";
+            } else if ((webShopFacade.getQuantityInInventory(Type.BEER) < quantityBeer) ||
                 (webShopFacade.getQuantityInInventory(Type.BEER) < quantityBearded)||
                 (webShopFacade.getQuantityInInventory(Type.BEER) < quantityAxe)){
                 error = "Error : There are not enough gnomes";

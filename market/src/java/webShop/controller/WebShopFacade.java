@@ -227,6 +227,12 @@ public class WebShopFacade {
         }
     }
     
+    public void setPrice(Type type, Integer newPrice){
+        InventoryDTO inventory = em.find(Inventory.class, 1);
+        GnomeDTO gnome = inventory.getGnome(type);
+        gnome.setPrice(newPrice);        
+    }
+    
     /**
      * Add the type 'type'
      * @param type the gnome's type
@@ -321,9 +327,14 @@ public class WebShopFacade {
      * @param pseudo the administrator's pseudo
      * @param password the administrator's password
      */
-    public void createAdministrator(String pseudo, String password){
-        AdministratorDTO administrator = new Administrator(pseudo, password);
-        em.persist(administrator);        
+    public Boolean createAdministrator(String pseudo, String password){
+        if (em.find(Administrator.class, pseudo) == null) {
+            AdministratorDTO administrator = new Administrator(pseudo, password);
+            em.persist(administrator);   
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**

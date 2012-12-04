@@ -39,6 +39,22 @@
             </p>
         </h:form>
         
+        <h2> Change price of a gnome </h2>
+        <h:form>
+            <p>
+            <h:selectOneMenu id="Gnomes" value="#{administratorPageManager.gnomeTypePrice}">
+                        <f:selectItem itemLabel="Bearded gnome" itemValue="BEARDED"/>
+                        <f:selectItem  itemLabel="Gnome with an axe" itemValue="AXE"/>
+                        <f:selectItem  itemLabel="Gnome with a beer" itemValue="BEER"/>
+            </h:selectOneMenu>
+            </p>
+            <h:outputText value="New price :" />
+            <h:inputText value="#{administratorPageManager.newPrice}" />
+            <p>
+            <h:commandButton value="Change price" action="#{administratorPageManager.changePrice}" />
+            </p>
+        </h:form>
+        
         <h2> Ban a user : </h2>
         <h:form>
             <h:outputText value="User name : " />

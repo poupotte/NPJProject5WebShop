@@ -30,6 +30,8 @@ public class AdministratorPageManager implements Serializable {
     private String error;
     private Type gnomeType;
     private Integer gnomeAmount = 0;
+    private Type gnomeTypePrice;
+    private Integer newPrice;
     private String userName;
     private String newAdministratorName;
     private String newAdministratorPassword;
@@ -130,8 +132,24 @@ public class AdministratorPageManager implements Serializable {
     public void setQuantityAxe(){
         int i =1;
     }
+
+    public Type getGnomeTypePrice() {
+        return gnomeTypePrice;
+    }
+
+    public void setGnomeTypePrice(Type gnomeTypePrice) {
+        this.gnomeTypePrice = gnomeTypePrice;
+    }
+
+    public Integer getNewPrice() {
+        return newPrice;
+    }
+
+    public void setNewPrice(Integer newPrice) {
+        this.newPrice = newPrice;
+    }
     
-    
+       
     
      /*************************************************************************/
      /******************* Management conversation and exception ***************/
@@ -196,6 +214,8 @@ public class AdministratorPageManager implements Serializable {
         Boolean check = webShopFacade.ban(userName);
         if (!check) {
             error = "Error : this user does not exist";
+        } else {
+            error = null;
         }
     }
     
@@ -205,7 +225,12 @@ public class AdministratorPageManager implements Serializable {
      */
     public void createAdministrator(){
         startConversation();
-        webShopFacade.createAdministrator(newAdministratorName, newAdministratorPassword);  
+        if (!webShopFacade.createAdministrator(newAdministratorName, 
+                newAdministratorPassword)) {
+            error = "Error : This name has already been used";
+        } else {
+            error = null;
+        }
     }
     
     /**
@@ -222,6 +247,8 @@ public class AdministratorPageManager implements Serializable {
         startConversation();
         if (!webShopFacade.addType(gnomeType)) {
             error = "This gnome has already been avaible.";
+        } else {
+            error = null;
         }
     }
     
@@ -233,7 +260,17 @@ public class AdministratorPageManager implements Serializable {
         Boolean ok = webShopFacade.removeType(gnomeType);
         if (!ok) {
             error = "This gnome has already been remove.";
+        } else {
+            error = null;
         }
+    }
+    
+    /**
+     * Change price of a gnome
+     */
+    public void changePrice(){
+        startConversation();
+        webShopFacade.setPrice(gnomeTypePrice, newPrice); 
     }
     
 }
