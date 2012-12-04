@@ -116,7 +116,7 @@ public class WebShopFacade {
     }
     
     /**
-     * withdraw an customer's account
+     * withdraw from a customer's account
      * @param pseudo the customer's pseudo
      */
     public void withdraw(String pseudo){
