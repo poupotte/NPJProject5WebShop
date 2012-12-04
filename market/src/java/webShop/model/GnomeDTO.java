@@ -16,9 +16,21 @@ public interface GnomeDTO {
     
     public Integer getAmount();
 
+    /**
+     * set the price of the current kind of gnome
+     * @param price 
+     */
     public void setPrice(Integer price);
     
+    /**
+     * set the type of the gnome
+     * @param type 
+     */
      public void setType(Type type);
      
+     /**
+      * set the amount of gnome in the shop
+      * @param amount 
+      */
     public void setAmount(Integer amount);
 }

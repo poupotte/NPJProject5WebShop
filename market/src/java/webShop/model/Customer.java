@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- *
+ * Database implementation of a customer
  * @author zoe
  */
 @Entity
@@ -45,7 +45,9 @@ public class Customer implements Serializable, CustomerDTO {
         
     }
     
-    /* Getter and Setter */
+    /**************************************************************************/
+    /********************** Getter and Setter *********************************/
+    /**************************************************************************/
     
     @Override
     public String getId() {
@@ -136,9 +138,10 @@ public class Customer implements Serializable, CustomerDTO {
     public void setQuantityAxe(Integer quantityAxe) {
         this.quantityAxe = quantityAxe;
     }
+    /*************************************************************************/
+    /****************** Management of customer *******************************/
+    /*************************************************************************/
     
-    /* Management of customer */
-   
     @Override
     public void add (Integer amount, Type type) {
         switch (type) {
@@ -154,12 +157,14 @@ public class Customer implements Serializable, CustomerDTO {
         }
     }
         
+    
     @Override
         public void emptyBasket(){
             quantityBeer = 0;
             quantityBearded = 0;
             quantityAxe = 0;
         }
+    
     
     @Override
     public Integer getQuantity(Type type){
@@ -174,6 +179,7 @@ public class Customer implements Serializable, CustomerDTO {
         return null;
     }
 
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -181,6 +187,7 @@ public class Customer implements Serializable, CustomerDTO {
         return hash;
     }
 
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -195,6 +202,7 @@ public class Customer implements Serializable, CustomerDTO {
         return true;
     }
 
+    
     @Override
     public String toString() {
         return "webShop.model.Customer[ id=" + pseudo + " ]";

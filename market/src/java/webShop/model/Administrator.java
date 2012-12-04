@@ -29,7 +29,9 @@ public class Administrator implements Serializable, AdministratorDTO {
         this.pseudo = pseudo;
         this.password = password;
     }
-
+/******************************************************************************/
+/**************************Getters and Setters*******************************/
+/******************************************************************************/
     @Override
     public String getPseudo() {
         return pseudo;
@@ -48,7 +50,9 @@ public class Administrator implements Serializable, AdministratorDTO {
         this.password = password;
     }
     
-    
+/******************************************************************************/
+/**************************Hashcode and Equals*******************************/
+/******************************************************************************/
 
     @Override
     public int hashCode() {

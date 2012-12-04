@@ -38,6 +38,10 @@ public class Inventory implements Serializable, InventoryDTO {
         gnomes[bearded]= new Gnome(12, Type.BEARDED, 10, this);
         gnomes[axe]= new Gnome(15, Type.AXE, 10, this);
     }
+    
+    /**************************************************************************/
+    /********************** Getter and Setter *********************************/
+    /**************************************************************************/
 
     @Override
     public Integer getId() {
@@ -71,7 +75,9 @@ public class Inventory implements Serializable, InventoryDTO {
     public void setAxeGnome(Gnome axeGnome) {
         this.gnomes[axe] = axeGnome;
     }
-    
+    /**************************************************************************/
+    /********************** Inventory management *********************************/
+    /**************************************************************************/
     @Override
     public void add (Integer amount, Type type) {
         switch (type) {
@@ -131,23 +137,9 @@ public class Inventory implements Serializable, InventoryDTO {
     }
     
         
-
-   /* @Override
-    public Iterator<Gnome> getGnomes(){
-        Iterator<Gnome> it = gnomes.iterator();
-        return it;
-    }
-    
-    
-    @Override
-    public void addGnome(Gnome gnome) {
-        gnomes.add(0,gnome);
-    }
-    
-    @Override
-    public void removeGnome(Gnome gnome) {
-        gnomes.remove(gnome);
-    }*/
+    /**************************************************************************/
+    /********************** HashCode and Equals *********************************/
+    /**************************************************************************/
     
     @Override
     public int hashCode() {
