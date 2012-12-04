@@ -5,7 +5,8 @@
 package webShop.model;
 
 /**
- *
+ * Database structure for an administrator. 
+ * It is possible to get the pseudo and the password
  * @author zoe
  */
 public interface AdministratorDTO {

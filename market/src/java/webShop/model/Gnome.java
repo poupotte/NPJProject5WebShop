@@ -22,8 +22,6 @@ public class Gnome implements Serializable, GnomeDTO {
     private Type type;
     private Integer price;
     private Integer amount;
-    /*@ManyToOne ()
-    private Inventory inventory;*/
 
     public Gnome() {
     }
@@ -35,6 +33,9 @@ public class Gnome implements Serializable, GnomeDTO {
         //this.inventory = inventory;
     }
     
+    /**************************************************************************/
+    /********************** Getter and Setter *********************************/
+    /**************************************************************************/
 
     @Override
     public Integer getPrice() {
@@ -65,6 +66,10 @@ public class Gnome implements Serializable, GnomeDTO {
     public void setPrice(Integer price) {
         this.price = price;
     }
+    
+/******************************************************************************/
+/**************************Hashcode and Equals*******************************/
+/******************************************************************************/
     
     @Override
     public int hashCode() {

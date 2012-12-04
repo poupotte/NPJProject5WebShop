@@ -5,7 +5,7 @@
 package webShop.model;
 
 /**
- *
+ * Database entity of a customer.
  * @author zoe
  */
 public interface CustomerDTO {
@@ -34,10 +34,20 @@ public interface CustomerDTO {
       
       public Integer getMoney() ;
       
+      public Integer getQuantity(Type type);
+      
+      /**
+       * Add a given quantity of gnome of a given type to the basket
+       * @param amount number of gnome to add
+       * @param type type of gnome
+       */
       public void add (Integer amount, Type type);
     
+      /**
+       * empty the basket of the customer
+       */
       public void emptyBasket();
     
-      public Integer getQuantity(Type type);
+      
 
 }
