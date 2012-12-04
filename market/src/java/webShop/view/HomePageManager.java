@@ -151,6 +151,35 @@ public class HomePageManager implements Serializable {
         int i = 1;
     }
     
+    
+    
+    public Boolean getBeerIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.BEER);
+    }
+    
+    public Boolean getBeardedIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.BEARDED);
+    }
+    
+    public Boolean getAxeIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.AXE);
+    }
+    
+     public void setBeerIsAvailable(){
+        int i = 1;
+    }
+    
+    public void setBeardedIsAvailable(){
+        int i = 1;
+    }
+    
+    public void setAxeIsAvailable(){
+        int i = 1;
+    }
+    
      /*************************************************************************/
      /******************* Management conversation and exception ***************/
      /*************************************************************************/

@@ -73,10 +73,12 @@ public class Customer implements Serializable, CustomerDTO {
         this.debt = debt;
     }
 
+    @Override
     public Boolean getIsbanned() {
         return isbanned;
     }
 
+    @Override
     public void setIsbanned(Boolean isbanned) {
         this.isbanned = isbanned;
     }

@@ -76,6 +76,33 @@ public class BasketPageManager implements Serializable {
         return webShopFacade.getBasketAmount(pseudo);
     }
     
+    public Boolean getBeerIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.BEER);
+    }
+    
+    public Boolean getBeardedIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.BEARDED);
+    }
+    
+    public Boolean getAxeIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.AXE);
+    }
+    
+     public void setBeerIsAvailable(){
+        int i = 1;
+    }
+    
+    public void setBeardedIsAvailable(){
+        int i = 1;
+    }
+    
+    public void setAxeIsAvailable(){
+        int i = 1;
+    }
+    
     public void setAmount(Integer amount){
         int i = 1;
     }

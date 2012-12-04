@@ -20,6 +20,8 @@ public interface InventoryDTO {
     
     public Gnome getAxeGnome();
     
+    public GnomeDTO getGnome(Type type);
+    
     public Integer getQuantity(Type type);
     
     /**

@@ -5,7 +5,6 @@
 package webShop.view;
 
 import java.io.Serializable;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.faces.bean.ApplicationScoped;
@@ -96,6 +95,33 @@ public class InventoryPageManager implements Serializable {
     }
     
     public void setPriceAxe(){
+        int i = 1;
+    }
+    
+    public Boolean getBeerIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.BEER);
+    }
+    
+    public Boolean getBeardedIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.BEARDED);
+    }
+    
+    public Boolean getAxeIsAvailable(){
+        startConversation();
+        return webShopFacade.getIsAvailable(Type.AXE);
+    }
+    
+     public void setBeerIsAvailable(){
+        int i = 1;
+    }
+    
+    public void setBeardedIsAvailable(){
+        int i = 1;
+    }
+    
+    public void setAxeIsAvailable(){
         int i = 1;
     }
 

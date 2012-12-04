@@ -15,6 +15,10 @@ public interface GnomeDTO {
     public Integer getPrice();
     
     public Integer getAmount();
+    
+    public Boolean getIsAvailable();
+
+    public void setIsAvailable(Boolean isAvailable);
 
     /**
      * set the price of the current kind of gnome

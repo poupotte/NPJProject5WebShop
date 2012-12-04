@@ -29,7 +29,7 @@ public class AdministratorPageManager implements Serializable {
     private Exception transactionFailure;
     private String error;
     private Type gnomeType;
-    private Integer gnomeAmount;
+    private Integer gnomeAmount = 0;
     private String userName;
     private String newAdministratorName;
     private String newAdministratorPassword;
@@ -213,6 +213,27 @@ public class AdministratorPageManager implements Serializable {
      */
     public void logOut(){
         logedIn = false;
+    }
+    
+    /**
+     * Add the type 'gnomeType' of gnome
+     */
+    public void addType(){
+        startConversation();
+        if (!webShopFacade.addType(gnomeType)) {
+            error = "This gnome has already been avaible.";
+        }
+    }
+    
+    /**
+     * Remove the type 'gnomeType' of gnome
+     */
+    public void removeType(){
+        startConversation();
+        Boolean ok = webShopFacade.removeType(gnomeType);
+        if (!ok) {
+            error = "This gnome has already been remove.";
+        }
     }
     
 }

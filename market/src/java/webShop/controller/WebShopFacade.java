@@ -14,6 +14,7 @@ import webShop.model.AdministratorDTO;
 import webShop.model.Customer;
 import webShop.model.CustomerDTO;
 import webShop.model.Gnome;
+import webShop.model.GnomeDTO;
 import webShop.model.Inventory;
 import webShop.model.InventoryDTO;
 import webShop.model.Type;
@@ -178,6 +179,12 @@ public class WebShopFacade {
         return quantity;
     }
     
+    
+    /**************************************************************************/
+    /************************** Gnome Management ******************************/
+    /**************************************************************************/
+    
+    
     /**
      * Get price of a type of gnome
      * @param type the gnome's type
@@ -185,15 +192,60 @@ public class WebShopFacade {
      */
     public Integer getPrice(Type type){
         InventoryDTO inventory = em.find(Inventory.class, 1);
-        switch (type) {
-            case BEER : 
-                return inventory.getBeerGnome().getPrice();
-            case BEARDED : 
-                return inventory.getBeardedGnome().getPrice();
-            case AXE : 
-                return inventory.getAxeGnome().getPrice();                
+        GnomeDTO gnome = inventory.getGnome(type);
+        if (gnome == null){
+            return null;
+        } else {
+            return gnome.getPrice();
         }
-        return null;
+    }
+    
+    public Boolean getIsAvailable(Type type){
+        InventoryDTO inventory = em.find(Inventory.class, 1);
+        GnomeDTO gnome = inventory.getGnome(type);
+        if (gnome == null){
+            return null;
+        } else {
+            return gnome.getIsAvailable();
+        }
+    }
+    
+    /**
+     * Add the type 'type'
+     * @param type the gnome's type
+     * @return 
+     */
+    public Boolean addType(Type type){
+        InventoryDTO inventory = em.find(Inventory.class, 1);
+        GnomeDTO gnome = inventory.getGnome(type);
+        Boolean isAvailable = gnome.getIsAvailable();
+        if (isAvailable){
+            return false;
+        } else {
+            gnome.setIsAvailable(true);
+            return true;
+        }
+    }
+    
+    /**
+     * Add the type 'type'
+     * @param type the gnome's type
+     * @return 
+     */
+    public Boolean removeType(Type type){
+        InventoryDTO inventory = em.find(Inventory.class, 1);
+        GnomeDTO gnome = inventory.getGnome(type);
+        if (gnome == null){
+            return null;
+        } else {
+            Boolean available = gnome.getIsAvailable();
+            if (!available){
+                return false;
+            } else {
+                gnome.setIsAvailable(false);
+                return true;
+            }
+        }
     }
     
     

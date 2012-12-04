@@ -10,23 +10,23 @@
         <h1> Welcome to our web shop </h1>
              <h2>Inventory :</h2>
              <p>
-                <h:outputText value="Gnome with a beer :"/>  
-                <h:outputLabel value="#{inventoryPageManager.quantityBeer}" />
-                <h:outputText value="  - price :"/>  
-                <h:outputLabel value="#{inventoryPageManager.priceBeer}" />
+                <h:outputText value="Gnome with a beer :" rendered="#{inventoryPageManager.beerIsAvailable}"/>  
+                <h:outputLabel value="#{inventoryPageManager.quantityBeer}" rendered="#{inventoryPageManager.beerIsAvailable}" />
+                <h:outputText value="  - price :" rendered="#{inventoryPageManager.beerIsAvailable}"/>  
+                <h:outputLabel value="#{inventoryPageManager.priceBeer}" rendered="#{inventoryPageManager.beerIsAvailable}"/>
              </p>
              <p>
-                <h:outputText value="Gnome with an axe :"/> 
-                <h:outputLabel value="#{inventoryPageManager.quantityAxe}" />
-                <h:outputText value=" - price :"/> 
-                <h:outputLabel value="#{inventoryPageManager.priceAxe}" />
+                <h:outputText value="Gnome with an axe :" rendered="#{inventoryPageManager.axeIsAvailable}"/> 
+                <h:outputLabel value="#{inventoryPageManager.quantityAxe}" rendered="#{inventoryPageManager.axeIsAvailable}" />
+                <h:outputText value=" - price :" rendered="#{inventoryPageManager.axeIsAvailable}"/> 
+                <h:outputLabel value="#{inventoryPageManager.priceAxe}" rendered="#{inventoryPageManager.axeIsAvailable}" />
              </p>
                  
              <p>
-                <h:outputText value="Bearded gnome :"/> 
-                <h:outputLabel value="#{inventoryPageManager.quantityBearded}" />
-                <h:outputText value="      - price :"/> 
-                <h:outputLabel value="#{inventoryPageManager.priceBearded}" />
+                <h:outputText value="Bearded gnome :" rendered="#{inventoryPageManager.beardedIsAvailable}"/> 
+                <h:outputLabel value="#{inventoryPageManager.quantityBearded}" rendered="#{inventoryPageManager.beardedIsAvailable}" />
+                <h:outputText value="      - price :" rendered="#{inventoryPageManager.beardedIsAvailable}"/> 
+                <h:outputLabel value="#{inventoryPageManager.priceBearded}" rendered="#{inventoryPageManager.beardedIsAvailable}" />
              </p>
         
              <p>

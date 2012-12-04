@@ -52,14 +52,17 @@ public class Inventory implements Serializable, InventoryDTO {
         this.id = id;
     }
     
+    @Override
       public Gnome getBeerGnome() {
         return gnomes[beer];
     }
 
+    @Override
     public Gnome getBeardedGnome() {
         return gnomes[bearded];
     }
 
+    @Override
     public Gnome getAxeGnome() {
         return gnomes[axe];
     }
@@ -134,6 +137,18 @@ public class Inventory implements Serializable, InventoryDTO {
                 gnomes[axe] = gnome;
                 break;
         }
+    }
+    
+    public GnomeDTO getGnome(Type type){
+        switch (type) {
+            case BEER : 
+                return gnomes[beer];
+            case BEARDED :
+                return gnomes[bearded];
+            case AXE :
+                return gnomes[axe] ;
+        }
+        return null;
     }
     
         

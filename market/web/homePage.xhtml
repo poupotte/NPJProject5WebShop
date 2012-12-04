@@ -18,9 +18,9 @@
             
         <h:form>
             <h:selectOneMenu id="Gnomes" value="#{homePageManager.boughtGnomeType}">
-                        <f:selectItem itemLabel="Bearded gnome" itemValue="BEARDED"/>
-                        <f:selectItem  itemLabel="Gnome with an axe" itemValue="AXE"/>
-                        <f:selectItem  itemLabel="Gnome with a beer" itemValue="BEER"/>
+                <f:selectItem itemLabel="Bearded gnome" itemValue="BEARDED" itemDisabled="#{!homePageManager.beardedIsAvailable}"/>
+                <f:selectItem  itemLabel="Gnome with an axe" itemValue="AXE" itemDisabled="#{!homePageManager.axeIsAvailable}"/>
+                <f:selectItem  itemLabel="Gnome with a beer" itemValue="BEER" itemDisabled="#{!homePageManager.beerIsAvailable}"/>
             </h:selectOneMenu>
             <h:inputText value="#{homePageManager.boughtAmount}" />
             <h:commandButton value="Put in the basket" action="#{homePageManager.putInBasket}" />

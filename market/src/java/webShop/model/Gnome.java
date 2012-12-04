@@ -22,6 +22,7 @@ public class Gnome implements Serializable, GnomeDTO {
     private Type type;
     private Integer price;
     private Integer amount;
+    private Boolean isAvailable;
 
     public Gnome() {
     }
@@ -30,6 +31,7 @@ public class Gnome implements Serializable, GnomeDTO {
         this.price = price;
         this.type = type;
         this.amount = amount;
+        this.isAvailable = true;
         //this.inventory = inventory;
     }
     
@@ -50,6 +52,14 @@ public class Gnome implements Serializable, GnomeDTO {
     @Override
     public Integer getAmount() {
         return amount;
+    }
+
+    public Boolean getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     @Override

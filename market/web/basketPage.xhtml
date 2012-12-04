@@ -10,18 +10,18 @@
         <h1> Welcome to our web shop </h1>
              <h2><h:outputLabel value="#{basketPageManager.pseudo}" />'s basket :</h2>
              <p>
-                <h:outputText value="Gnome with a beer :"/> 
-                <h:outputLabel value="#{basketPageManager.quantityBeer}" />
+                <h:outputText value="Gnome with a beer :" rendered="#{basketPageManager.beerIsAvailable}"/> 
+                <h:outputLabel value="#{basketPageManager.quantityBeer}"  rendered="#{basketPageManager.beerIsAvailable}"/>
              </p>
         
              <p>
-                <h:outputText value="Gnome with an axe :"/> 
-                <h:outputLabel value="#{basketPageManager.quantityAxe}" />
+                <h:outputText value="Gnome with an axe :"  rendered="#{basketPageManager.axeIsAvailable}"/> 
+                <h:outputLabel value="#{basketPageManager.quantityAxe}"  rendered="#{basketPageManager.axeIsAvailable}"/>
              </p>
         
              <p>
-                <h:outputText value="Bearded gnome :"/> 
-                <h:outputLabel value="#{basketPageManager.quantityBearded}" />
+                <h:outputText value="Bearded gnome :"  rendered="#{basketPageManager.beardedIsAvailable}"/> 
+                <h:outputLabel value="#{basketPageManager.quantityBearded}"  rendered="#{basketPageManager.beardedIsAvailable}"/>
              </p>
              
              
