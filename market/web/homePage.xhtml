@@ -48,6 +48,7 @@
         <h:form>
             <h:commandButton value="Buy my basket" action="#{homePageManager.buy}" rendered="#{!homePageManager.isBuy}"/>
             <h:commandButton value="Pay my purchase" action="#{homePageManager.pay}" rendered="#{homePageManager.isBuy}"/>
+            <h:commandButton value="Cancel" action ="#{homePageManager.cancelPay}" rendered="#{homePageManager.isBuy}" />
         </h:form>
         
              <p>

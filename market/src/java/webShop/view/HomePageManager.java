@@ -239,13 +239,33 @@ public class HomePageManager implements Serializable {
                 error = "Error : You have not enough money";                
             } else {
                 webShopFacade.setDebt(userName, webShopFacade.getBasketAmount(userName));
-                webShopFacade.emptyBasket(userName);
                 webShopFacade.removeGnomeToInventory(Type.BEER, quantityBeer); 
                 webShopFacade.removeGnomeToInventory(Type.BEARDED, quantityBearded); 
                 webShopFacade.removeGnomeToInventory(Type.AXE, quantityAxe); 
                 isBuy = true;
                 error = null;
             }
+        } catch (Exception e) {
+            handleException(e);
+        }
+    }
+    
+    /**
+     * Cancel the bought of a basket
+     */
+    public void cancelPay(){
+        startConversation();
+        try {
+            Integer beerInBasket = webShopFacade.getQuantityInBasket(Type.BEER, userName);
+            Integer beardInBasket = webShopFacade.getQuantityInBasket(Type.BEARDED, userName);
+            Integer axeInBasket = webShopFacade.getQuantityInBasket(Type.AXE, userName);
+            
+            webShopFacade.setDebt(userName, 0);
+            
+            webShopFacade.addGnome(Type.AXE, axeInBasket);
+            webShopFacade.addGnome(Type.BEARDED, beardInBasket);
+            webShopFacade.addGnome(Type.BEER, beerInBasket);
+            isBuy = false;
         } catch (Exception e) {
             handleException(e);
         }
@@ -265,6 +285,8 @@ public class HomePageManager implements Serializable {
         }
         
     }
+    
+
     
     /**
      * Empty the customer's basket
