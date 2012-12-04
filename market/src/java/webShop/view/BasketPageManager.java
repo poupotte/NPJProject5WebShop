@@ -15,7 +15,8 @@ import webShop.model.Type;
 
 /**
  *
- * @author zoe
+ * @author Simon Cathébras
+ * @author Zoé Bellot
  */
 @ManagedBean(name = "basketPageManager")
 @ApplicationScoped
@@ -37,6 +38,12 @@ public class BasketPageManager implements Serializable {
     public BasketPageManager() {
     }
     
+    
+    /*************************************************************************/
+    /*************************** Getter and Setter ***************************/
+    /*************************************************************************/
+    
+    
      public Integer getQuantityBeer() {
         startConversation(); 
         return webShopFacade.getQuantityInBasket(Type.BEER, pseudo);
@@ -51,7 +58,6 @@ public class BasketPageManager implements Serializable {
         startConversation(); 
         return webShopFacade.getQuantityInBasket(Type.BEARDED, pseudo);
     }
-
     
     public String getError() {
         return error;
@@ -82,7 +88,6 @@ public class BasketPageManager implements Serializable {
         this.homePageManager = homePageManager;
     }
 
-
     public Boolean getLogIn() {
         return logIn;
     }
@@ -90,7 +95,6 @@ public class BasketPageManager implements Serializable {
     public void setLogIn(Boolean logIn) {
         this.logIn = logIn;
     }
-
    
     public void setError(String error) {
         this.error = error;
@@ -108,14 +112,14 @@ public class BasketPageManager implements Serializable {
         int i = 1; 
     }
     
-     private void handleException(Exception e) {
-        stopConversation();
-        e.printStackTrace(System.err);
-        transactionFailure = e;
-    }
 
+     /*************************************************************************/
+     /******************* Management conversation and exception ***************/
+     /*************************************************************************/    
+     
+     
     /**
-     * Start the conversation with the bean
+     * Start the conversation with the bean.
      */
     private void startConversation() {
         if (conversation.isTransient()) {
@@ -124,12 +128,22 @@ public class BasketPageManager implements Serializable {
     }
 
     /**
-     * stop the conversation with the beans
+     * stop the conversation with the beans.
      */
     private void stopConversation() {
         if (!conversation.isTransient()) {
             conversation.end();
         }
+    }
+    
+    /**
+     * Stop conversation and handle the conversation
+     * @param e : exception to handle
+     */
+    private void handleException(Exception e) {
+        stopConversation();
+        e.printStackTrace(System.err);
+        transactionFailure = e;
     }
 
     /**
@@ -148,6 +162,13 @@ public class BasketPageManager implements Serializable {
         return transactionFailure;
     }
     
+    /*************************************************************************/
+    /********************** Management of redirection ************************/
+    /*************************************************************************/
+    
+    /**
+     * Redirect the xhtml page in the homePage of the user.
+     */
     public void redirect(){
          logIn = false;
     }

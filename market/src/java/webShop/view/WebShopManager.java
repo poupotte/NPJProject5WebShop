@@ -16,7 +16,8 @@ import webShop.model.*;
 
 /**
  *
- * @author zoe
+ * @author Simon Cathébras
+ * @author Zoé Bellot
  */
 @ManagedBean(name="webShopManager")
 @ApplicationScoped
@@ -41,17 +42,63 @@ public class WebShopManager implements Serializable {
      */
     public WebShopManager() {
     }
+    
+    
+    /*************************************************************************/
+    /*************************** Getter and Setter ***************************/
+    /*************************************************************************/
 
+    
     public HomePageManager getHomePageManager() {
         return homePageManager;
     }
 
     public void setHomePageManager(HomePageManager homePageManager) {
         this.homePageManager = homePageManager;
+    }  
+    
+       public String getCurrentPseudo() {
+        return currentPseudo;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public AdministratorPageManager getAdministratorPageManager() {
+        return administratorPageManager;
+    }
+
+    public void setAdministratorPageManager(AdministratorPageManager administratorPageManager) {
+        this.administratorPageManager = administratorPageManager;
+    }
+  
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public void setCurrentPseudo(String currentPseudo) {
+        this.currentPseudo = currentPseudo;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
     }
     
     
+     /*************************************************************************/
+     /******************* Management conversation and exception ***************/
+     /*************************************************************************/
     
+    /**
+     * Stop the conversation and handle the exception e
+     * @param e the exception to handle
+     */
     private void handleException(Exception e) {
         stopConversation();
         e.printStackTrace(System.err);
@@ -92,39 +139,20 @@ public class WebShopManager implements Serializable {
         return transactionFailure;
     }
 
-    public String getCurrentPseudo() {
-        return currentPseudo;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public String getCurrentPassword() {
-        return currentPassword;
-    }
-
-    public AdministratorPageManager getAdministratorPageManager() {
-        return administratorPageManager;
-    }
-
-    public void setAdministratorPageManager(AdministratorPageManager administratorPageManager) {
-        this.administratorPageManager = administratorPageManager;
-    }
-  
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public void setCurrentPseudo(String currentPseudo) {
-        this.currentPseudo = currentPseudo;
-    }
-
-    public void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
-    }
+ 
+    /**************************************************************************/    
+    /*********************** Management log and init***** *********************/
+    /**************************************************************************/
     
+    /**
+     * Log on the customer.
+     * 
+     * Redirect on the xhtlm homePage of the customer
+     * A error message is displayed if :
+     *          - The name does not exist
+     *          - The password and the name don't correspond
+     *          - The user is banned
+     */
     public void loginCustomer(){
         startConversation();
         CustomerDTO customer;
@@ -147,6 +175,13 @@ public class WebShopManager implements Serializable {
         }
     }
     
+    /**
+     * Create a new customer.
+     * 
+     * A error message is displayed if :
+     *          - The password lentgh in smaller than 8 characters
+     *          - The user name is used by another customer
+     */
     public void createNewCustomer() {
         startConversation();
         try {
@@ -169,11 +204,22 @@ public class WebShopManager implements Serializable {
     
     }
     
+    /**
+     * Initialize the database.
+     *      - Initialize the inventory
+     *      - Create an default administrator : (root, javajava)
+     */
     public void init(){
         startConversation();
         webShopFacade.init();
     }
     
+    /**
+     * Log on an administrator.
+     * Redisrect on the xhtml page administratorPage
+     * A error message are displayed if :
+     *          - The pseudo and the password don't correspond
+     */
     public void logAdministrator(){
         startConversation();
         AdministratorDTO administrator = webShopFacade.getAdministrator(currentPseudo);

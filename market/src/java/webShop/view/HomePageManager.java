@@ -17,7 +17,8 @@ import webShop.model.Type;
 
 /**
  *
- * @author fingolfin
+ * @author Simon Cathébras
+ * @author Zoé Bellot
  */
 @ManagedBean(name="homePageManager")
 @ApplicationScoped
@@ -46,8 +47,10 @@ public class HomePageManager implements Serializable {
     public HomePageManager() {
     }
     
+    
     /*************************************************************************/
-    /* Getter and Setter */
+    /*************************** Getter and Setter ***************************/
+    /*************************************************************************/
 
     public String getError() {
         return error;
@@ -63,12 +66,6 @@ public class HomePageManager implements Serializable {
     
     public boolean getLogIn(){
         return logedIn;
-    }
-        
-    public void logOut(){
-        startConversation();
-        webShopFacade.logoutCustomer(this.userName);
-        this.logedIn = false;
     }
 
     public Boolean getLogedIn() {
@@ -154,9 +151,9 @@ public class HomePageManager implements Serializable {
         int i = 1;
     }
     
-    
-    /*************************************************************************/
-    /* Management conversation and exception */
+     /*************************************************************************/
+     /******************* Management conversation and exception ***************/
+     /*************************************************************************/
     
     /**
      * Start the conversation with the bean
@@ -175,18 +172,27 @@ public class HomePageManager implements Serializable {
             conversation.end();
         }
     }
-        
+     
+    /**
+     * Stop the conversation and handle the exception.
+     * @param e  Exception to handle
+     */
     private void handleException(Exception e) {
         stopConversation();
         e.printStackTrace(System.err);
         transactionFailure = e;
     }
+        
+    
+    /**************************************************************************/    
+    /********************* Management basket, pay and buy *********************/
+    /**************************************************************************/
     
     
-    
-    /*************************************************************************/    
-    /* Management basket, pay and buy */
-    
+    /**
+     * Put in the basket 'boughtAmount' of gnomes which have 
+     * the type 'boughtGnomeType'.
+     */
     public void putInBasket(){
         startConversation();
         try {
@@ -201,6 +207,24 @@ public class HomePageManager implements Serializable {
         }
     }
     
+    /**
+     * Log out the customer and redirect the page on home.xhtml.
+     */    
+    public void logOut(){
+        startConversation();
+        webShopFacade.logoutCustomer(this.userName);
+        this.logedIn = false;
+    }
+    
+    /**
+     * Remove basket's gnomes in the inventory,
+     * empty the customer's basket and
+     * add to the debt the amount of the basket.
+     *
+     * An error message are displayed if  :
+     *        - there not enough gnomes in the inventory
+     *        - the customer hasn't enough money
+     */
     public void buy(){
         startConversation();
         try {
@@ -227,6 +251,10 @@ public class HomePageManager implements Serializable {
         }
     }
     
+    /**
+     * Pay the last bought.
+     * The amount of the debt is removed of the customer's money.
+     */
     public void pay(){
         startConversation();
         try{
@@ -238,14 +266,23 @@ public class HomePageManager implements Serializable {
         
     }
     
+    /**
+     * Empty the customer's basket
+     */
     public void emptyBasket(){
         startConversation();
         webShopFacade.emptyBasket(userName);
     }
     
     
-    /* Redirection */
+    /**************************************************************************/    
+    /********************* Management basket, pay and buy *********************/
+    /**************************************************************************/
         
+    
+    /**
+     * Redirect the xhtml page to the inventoryPage
+     */
     public void redirectInventory(){
         boughtAmount = null;
         error = null;
@@ -253,6 +290,9 @@ public class HomePageManager implements Serializable {
         inventoryPageManager.setLogIn(true);
     }
     
+    /**
+     * Redirect the xhtml page to the basketPage
+     */
     public void redirectBasket(){
         boughtAmount = null;
         error = null;

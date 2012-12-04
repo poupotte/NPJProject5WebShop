@@ -16,7 +16,8 @@ import webShop.model.Type;
 
 /**
  *
- * @author zoe
+ * @author Simon Cathébras
+ * @author Zoé Bellot
  */
 @ManagedBean(name = "inventoryPageManager")
 @ApplicationScoped
@@ -37,7 +38,13 @@ public class InventoryPageManager implements Serializable {
     public InventoryPageManager() {
     }
     
-     public Integer getQuantityBeer() {
+    
+    /*************************************************************************/
+    /*************************** Getter and Setter ***************************/
+    /*************************************************************************/
+    
+    
+    public Integer getQuantityBeer() {
          startConversation();
         return webShopFacade.getQuantityInInventory(Type.BEER);
     }
@@ -116,6 +123,15 @@ public class InventoryPageManager implements Serializable {
         int i = 1; 
     }
     
+    
+     /*************************************************************************/
+     /******************* Management conversation and exception ***************/
+     /*************************************************************************/
+    
+    /**
+     * Stop the conversation and handle the excpetion e
+     * @param e the exception to handle
+     */
      private void handleException(Exception e) {
         stopConversation();
         e.printStackTrace(System.err);
@@ -156,6 +172,14 @@ public class InventoryPageManager implements Serializable {
         return transactionFailure;
     }
     
+    
+    /*************************************************************************/
+    /********************** Management of redirection ************************/
+    /*************************************************************************/
+    
+    /**
+     * Redirect the xhtml page in the homePage of the user.
+     */
     public void redirect(){
             this.logIn = false;
     }

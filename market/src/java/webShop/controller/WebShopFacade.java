@@ -20,7 +20,8 @@ import webShop.model.Type;
 
 /**
  *
- * @author zoe
+ * @author Simon Cathébras
+ * @author Zoé Bellot
  */
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Stateless
@@ -33,26 +34,47 @@ public class WebShopFacade {
     // "Insert Code > Add Business Method")
     
     
-    /* Customer Management */
+    /**************************************************************************/
+    /************************* Customer Management ****************************/
+    /**************************************************************************/
     
+    /**
+     * Create a new customer.
+     * @param pseudo pseudo of the new customer
+     * @param password password of the new customer
+     * @return the new customer
+     */
     public CustomerDTO createCustomerDTO(String pseudo, String password) {
         CustomerDTO customer = new Customer(pseudo, password);
         em.persist(customer);
         return customer;
     }
     
+    /**
+     * Log in a customer
+     * @param pseudo customer's pseudo
+     */
     public void loginCustomer(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         customer.setIsLog(true);
         em.merge(customer);  
     }
         
+    /**
+     * Log out a customer
+     * @param pseudo customer's pseudo 
+     */
     public void logoutCustomer(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         customer.setIsLog(false);
         em.merge(customer);    
     }
     
+    /**
+     * Get the customer wich calls 'pseudo'
+     * @param pseudo the customer's pseudo
+     * @return the customer or null if the customer doesn't exist
+     */
     public CustomerDTO getCustomer(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         if (customer == null) {
@@ -61,22 +83,41 @@ public class WebShopFacade {
         return customer;
     }
     
+    /**
+     * Get the amount of money of the customer which calls 'pseudo'
+     * @param pseudo the customer's pseudo
+     * @return the amount of money of the customer
+     */
     public Integer getMoney(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         return customer.getMoney();
     }
     
+    /**
+     * Get the debt of the customer which calls 'pseudo'
+     * @param pseudo the customer's pseudo
+     * @return the debt of the customer
+     */
     public Integer getDebt(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         return customer.getDebt();
     }
     
+    /**
+     * Set debt
+     * @param pseudo the customer's pseudo
+     * @param debt the new debt
+     */
     public void setDebt(String pseudo, Integer debt){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         customer.setDebt(debt);
         em.merge(customer);
     }
     
+    /**
+     * withdraw an customer's account
+     * @param pseudo the customer's pseudo
+     */
     public void withdraw(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         customer.setMoney(customer.getMoney()-customer.getDebt());
@@ -84,6 +125,11 @@ public class WebShopFacade {
         em.merge(customer);
     }
     
+    /**
+     * Ban a customer
+     * @param pseudo the customer's pseudo
+     * @return if the customer has been found
+     */
     public Boolean ban(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         if (customer == null) {
@@ -95,28 +141,48 @@ public class WebShopFacade {
         }
     }
         
-    
-    /* Inventory Management */
+    /**************************************************************************/
+    /************************ Inventory Management ****************************/
+    /**************************************************************************/
           
+    /**
+     * Add gnomes in the inventory
+     * @param type the gnomes' type
+     * @param amount the amount of the gnomes
+     */
      public void addGnome(Type type,Integer amount) {
         InventoryDTO inventory = em.find(Inventory.class, 1);
         inventory.add(amount, type);        
         em.merge(inventory);
     }
     
+    /**
+     * Remove gnomes in the inventory
+     * @param typethe gnomes' type
+     * @param amount the amount of the gnomes
+     */
     public void removeGnomeToInventory(Type type, Integer amount){
         InventoryDTO inventory = em.find(Inventory.class, 1);
         inventory.remove(amount, type);
-        //em.remove(gnome);
         em.merge(inventory);
     }
     
+    /**
+     * Get the quantity of a type of gnome in the inventory
+     * @param type the gnome's type
+     * @return the quantity of gnomes
+     */
     public Integer getQuantityInInventory(Type type) {
         InventoryDTO inventory = em.find(Inventory.class, 1);
         Integer quantity = inventory.getQuantity(type);
         return quantity;
     }
     
+    /**
+     * Get price of a type of gnome
+     * @param type the gnome's type
+     * @return the price of the gnome
+     */
     public Integer getPrice(Type type){
         InventoryDTO inventory = em.find(Inventory.class, 1);
         switch (type) {
@@ -130,25 +196,49 @@ public class WebShopFacade {
         return null;
     }
     
-    /* Basket Management */
     
+    /**************************************************************************/
+    /************************** Basket Management *****************************/
+    /**************************************************************************/
+    
+    /**
+     * Add gnomes in the customer's basket.
+     * @param amount the amount of gnomes
+     * @param type the gnomes' type
+     * @param nameCustomer the customer's name
+     */
     public void addGnomeToBasket(Integer amount, Type type, String nameCustomer){
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
         customer.add(amount, type);
         em.merge(customer);
     }
     
+    /**
+     * Remove gnomes in the customer's basket.     
+     * @param nameCustomer the customer's name
+     */
     public void removeGnomeToBasket(String nameCustomer) {
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
         customer.emptyBasket();
         em.merge(customer);
     }
     
+    /**
+     * Get quantity of a type of gnome in the customer's basket.
+     * @param type the gnomes' type
+     * @param nameCustomer the customer's name
+     * @return the quantity of the gnomes in the basket
+     */
     public Integer getQuantityInBasket(Type type, String nameCustomer){
         CustomerDTO customer = em.find(Customer.class, nameCustomer);
         return customer.getQuantity(type);   
     }  
     
+    /**
+     * Get the total price of the basket.
+     * @param nameCustomer customer's name
+     * @return the price of the customer's basket
+     */
     public Integer getBasketAmount(String nameCustomer){
         InventoryDTO inventory = em.find(Inventory.class, 1);
         Integer priceAxe = inventory.getAxeGnome().getPrice();
@@ -160,37 +250,59 @@ public class WebShopFacade {
                 priceBeer*customer.getQuantity(Type.BEER);
     }
     
-    
-    
-    
+    /**
+     * Empty the basket.
+     * @param pseudo the customer's pseudo
+     */   
     public void emptyBasket(String pseudo){
         CustomerDTO customer = em.find(Customer.class, pseudo);
         customer.emptyBasket();
     }
     
-    /* Management of Administrator */
     
+    /**************************************************************************/
+    /********************* Administrator Management ***************************/
+    /**************************************************************************/
+    
+    /**
+     * Create a new administrator.
+     * @param pseudo the administrator's pseudo
+     * @param password the administrator's password
+     */
     public void createAdministrator(String pseudo, String password){
         AdministratorDTO administrator = new Administrator(pseudo, password);
         em.persist(administrator);        
     }
     
+    /**
+     * Get administrator.
+     * @param pseudo the administrator's pseudo
+     * @return the administrator
+     */
     public AdministratorDTO getAdministrator(String pseudo){
         AdministratorDTO administrator = em.find(Administrator.class, pseudo);
         return administrator;
     }
     
-    /* Initialization */
     
+    /**************************************************************************/
+    /************************** Initialization ********************************/
+    /**************************************************************************/
     
+    /**
+     * Create the inventory with 10 units of each type of gnomes
+     */
     public void createInventory(){
-        if (!inventoryInitialize) {
             InventoryDTO inventory = new Inventory(1);
             inventoryInitialize = true;
             em.persist(inventory);
-        }   
     }
     
+    /**
+     * Initialize the database :
+     *      - Initialize the inventory
+     *      - Create the default administrator : (root, javajava)
+     */
     public void init(){
         if (em.find(Inventory.class, 1) == null) {
             createInventory();

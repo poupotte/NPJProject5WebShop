@@ -16,7 +16,8 @@ import webShop.model.Type;
 
 /**
  *
- * @author zoe
+ * @author Simon Cathébras
+ * @author Zoé Bellot
  */
 @ManagedBean(name="administratorPageManager")
 @ApplicationScoped
@@ -34,15 +35,19 @@ public class AdministratorPageManager implements Serializable {
     private String newAdministratorPassword;
     @Inject
     private Conversation conversation;
+    
     /**
      * Creates a new instance of AdministratorPageManager
      */
     public AdministratorPageManager() {
     }
     
+    
     /*************************************************************************/
-    /* Getter and Setter */
-
+    /*************************** Getter and Setter ***************************/
+    /*************************************************************************/
+    
+    
     public Boolean getLogedIn() {
         return logedIn;
     }
@@ -129,7 +134,9 @@ public class AdministratorPageManager implements Serializable {
     
     
      /*************************************************************************/
-     /* Management conversation and exception */
+     /******************* Management conversation and exception ***************/
+     /*************************************************************************/
+    
     
     /**
      * Start the conversation with the bean
@@ -149,25 +156,41 @@ public class AdministratorPageManager implements Serializable {
         }
     }
         
+    /**
+     * Stop the conversation and handle exception 
+     * @param e : Exception to handle
+     */
     private void handleException(Exception e) {
         stopConversation();
         e.printStackTrace(System.err);
         transactionFailure = e;
     }
     
-    /*************************************************************************/
-    /* Management of admin */
     
+    /*************************************************************************/
+    /************************** Management of admin **************************/
+    /*************************************************************************/
+    
+    
+    /**
+     * Add in the inventory 'gnomeAmount' gnome of type 'gnomeType'
+     */
     public void addInInventory(){
         startConversation();
         webShopFacade.addGnome(gnomeType, gnomeAmount);        
     }
     
+    /**
+     * Remove in the inventory 'gnomeAmount' gnome of type 'gnomeType'
+     */
     public void removeInInventory(){
         startConversation();
         webShopFacade.removeGnomeToInventory(gnomeType, gnomeAmount); 
     }
     
+    /**
+     * Ban the user 'userName'
+     */
     public void banUser(){
         startConversation();
         Boolean check = webShopFacade.ban(userName);
@@ -176,11 +199,18 @@ public class AdministratorPageManager implements Serializable {
         }
     }
     
+    /**
+     * create an administrator with the name 'newAdministratorName' 
+     * and the password 'newAdministratorPassword'
+     */
     public void createAdministrator(){
         startConversation();
         webShopFacade.createAdministrator(newAdministratorName, newAdministratorPassword);  
     }
     
+    /**
+     * Logout the current administrator
+     */
     public void logOut(){
         logedIn = false;
     }
